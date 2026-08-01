@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(node --version)",
+      "Shell(npm:*)",
+      "Shell(pnpm:*)",
+      "Shell(docker:*)",
+      "Shell(node -v)",
+      "Shell(npx prisma generate)",
+      "Shell(npx prisma validate)",
+      "Shell(copy:*)",
+      "Shell(npm ls iron-session; type node_modules\\iron-session\\dist\\index.d.ts 2>nul | findstr /i \"export\")",
+      "Shell(dir:*)",
+      "Shell(dir node_modules\\tailwindcss 2>nul; dir node_modules\\postcss 2>nul; dir node_modules\\autoprefixer 2>nul)",
+      "Shell(dir node_modules\\tailwindcss 2>nul | findstr \"tailwindcss\"; echo ---; dir node_modules\\postcss 2>nul | findstr \"postcss\"; echo ---; dir node_modules\\autoprefixer 2>nul | findstr \"autoprefixer\")",
+      "Shell(node -e \"console.log(require.resolve('tailwindcss')); console.log(require.resolve('postcss')); console.log(require.resolve('autoprefixer')); console.log(require.resolve('dotenv'))\")",
+      "Shell(type package-lock.json 2>nul | findstr /c:\"tailwindcss\" /c:\"autoprefixer\" /c:\"dotenv\")",
+      "Shell(findstr:*)",
+      "Shell(more:*)",
+      "powershell",
+      "Shell(node -e \"['tailwindcss','postcss','autoprefixer','dotenv','next','react','react-dom','prisma','@prisma/client','iron-session','bcryptjs','zod','tsx','eslint','typescript'].forEach(m=>{try{require.resolve(m);console.log('OK',m)}catch(e){console.log('MISSING',m)}})\")",
+      "Shell(set:*)",
+      "Shell(node -e \"['tailwindcss','postcss','autoprefixer','dotenv','next','react','react-dom','prisma','@prisma/client','iron-session','bcryptjs','zod','tsx','eslint','typescript','eslint-config-next'].forEach(m=>{try{require.resolve(m);console.log('OK',m)}catch(e){console.log('MISSING',m)}})\")",
+      "Shell(node_modules.binprisma.cmd:*)",
+      "Shell(node -e \"const p=require('@prisma/client'); console.log('SessionStatus:', p.SessionStatus); console.log('SessionType:', p.SessionType);\")",
+      "Shell(npx tsx --eval import { makeZip } from './lib/makeZip'; import * as fs from 'node:fs'; const z = makeZip([{path:'README.md', data:'hello'},{path:'dir/a.txt', data:'content'}]); fs.writeFileSync('scratchpad-test.zip', z); console.log('zip bytes:', z.length); console.log('sig ok:', z.readUInt32LE(0)===0x04034b50);)",
+      "Shell(del scratchpad-test.zip 2>nul; set NODE_ENV=development&& npx tsx prisma/seed.ts)",
+      "Shell(npx tsc --noEmit scripts/create-session.ts prisma/seed.ts --module esnext --moduleResolution bundler --target es2017 --esModuleInterop --skipLibCheck --resolveJsonModule)",
+      "Shell(dir /s /b app lib prisma scripts components fixtures 2>nul | findstr /v \"node_modules .next\")",
+      "Shell(npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script)",
+      "Shell(npx tsx --eval import { collectFiles } from './prisma/seed.ts' as any 2 >& 1)",
+      "Shell(npx tsx --eval import { readdir, readFile, writeFile } from 'node:fs/promises'; import path from 'node:path'; import { makeZip } from './lib/makeZip'; async function collect(dir: string, base: string, out: any[]) { const es = await readdir(dir, { withFileTypes: true }); for (const e of es) { const full = path.join(dir, e.name); const rel = base ? base + '/' + e.name : e.name; if (e.isDirectory()) await collect(full, rel, out); else out.push({ path: rel, data: await readFile(full) }); } } (async () => { const files: any[] = []; await collect('fixtures/sample-starter', '', files); const zip = makeZip(files.map((f: any) => ({ path: f.path, data: f.data }))); await writeFile('seed-starter-test.zip', zip); console.log('files:', files.length, 'zip bytes:', zip.length); })();)",
+      "Shell(type:*)",
+      "Shell(dir /b storage 2>nul; echo ---; dir /b *.zip 2>nul)",
+      "Shell(netstat:*)",
+      "Shell(git --version 2>&1; echo ---; gh --version 2>&1; echo ---; git status 2>&1)",
+      "Shell(git:*)",
+      "Shell(gh:*)"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}

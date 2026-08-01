@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+dist/
+.env
+.env.local
+storage/
+*.zip
+!fixtures/**/*.zip
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+coverage/
