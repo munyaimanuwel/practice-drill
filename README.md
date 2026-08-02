@@ -126,6 +126,13 @@ draft → ready → in_progress → submitted → grade_requested → graded
 | [docs/UI_SCREENS.md](./docs/UI_SCREENS.md) | Screens |
 | [docs/BUILD_PLAN.md](./docs/BUILD_PLAN.md) | Build order |
 | [docs/ACCEPTANCE.md](./docs/ACCEPTANCE.md) | Done checklist |
+| [docs/DEPLOY.md](./docs/DEPLOY.md) | Dokploy / Docker deployment guide |
+
+## Deploy
+
+Deploy to your VPS with **Dokploy** using the included `Dockerfile` — see
+[`docs/DEPLOY.md`](./docs/DEPLOY.md) for the full walkthrough (Postgres service,
+env vars, persistent volume, TLS, redeploys).
 
 ## Changelog P0.1 (post-review fixes)
 

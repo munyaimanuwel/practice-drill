@@ -1,10 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { getIronSession } from "iron-session";
-import { sessionOptions, type SessionData } from "@/lib/session";
+import { verifyAuthMarker, authMarkerCookieName } from "@/lib/auth-marker";
 
 const PUBLIC_API_PREFIXES = ["/api/auth/login", "/api/auth/logout"];
 
-// Constant-time-ish compare to avoid leaking the token via timing.
+// Constant-time compare to avoid leaking the token via timing.
 function safeEqual(a: string, b: string): boolean {
   if (a.length !== b.length) return false;
   let diff = 0;
@@ -33,25 +32,21 @@ function isServiceCreateRequest(request: NextRequest): boolean {
   return !!match && safeEqual(match[1], token);
 }
 
-// Middleware only needs to READ the session; iron-session requires a cookie
-// store, so adapt the request's Cookie header into one.
-function cookieStoreFromRequest(request: NextRequest) {
+function getCookie(request: NextRequest, name: string): string | undefined {
   const cookieHeader = request.headers.get("cookie") ?? "";
-  const map = new Map<string, string>();
   for (const part of cookieHeader.split(";")) {
     const idx = part.indexOf("=");
     if (idx === -1) continue;
-    const name = part.slice(0, idx).trim();
-    const value = part.slice(idx + 1).trim();
-    if (name) map.set(name, decodeURIComponent(value));
+    if (part.slice(0, idx).trim() === name) {
+      const value = part.slice(idx + 1).trim();
+      try {
+        return decodeURIComponent(value);
+      } catch {
+        return value;
+      }
+    }
   }
-  return {
-    get: (name: string) => {
-      const value = map.get(name);
-      return value ? { name, value } : undefined;
-    },
-    set: () => {},
-  };
+  return undefined;
 }
 
 export async function middleware(request: NextRequest) {
@@ -68,13 +63,12 @@ export async function middleware(request: NextRequest) {
   // Service-token routes (POST /api/sessions, POST /api/sessions/:id/starter).
   if (isApi && isServiceCreateRequest(request)) return NextResponse.next();
 
-  const session = await getIronSession<SessionData>(cookieStoreFromRequest(request), {
-    ...sessionOptions,
-  });
+  const marker = getCookie(request, authMarkerCookieName());
+  const hasValidSession = marker ? await verifyAuthMarker(marker) : false;
 
   // Protect all other /api/* routes.
   if (isApi) {
-    if (!session.user) {
+    if (!hasValidSession) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     return NextResponse.next();
@@ -83,7 +77,7 @@ export async function middleware(request: NextRequest) {
   // Protect pages: /login is public, everything else requires auth.
   if (pathname === "/login") return NextResponse.next();
 
-  if (!session.user) {
+  if (!hasValidSession) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("next", pathname);

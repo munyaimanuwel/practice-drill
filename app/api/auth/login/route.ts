@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDrillSession } from "@/lib/session";
+import { createAuthMarker, authMarkerCookieName } from "@/lib/auth-marker";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
@@ -38,6 +39,15 @@ export async function POST(request: Request) {
     isAdmin: user.isAdmin,
   };
   await session.save();
+
+  // Set the Edge-safe auth marker cookie (verified by middleware).
+  cookieStore.set(authMarkerCookieName(), await createAuthMarker(user.id), {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 60 * 60 * 24 * 30,
+    path: "/",
+  });
 
   return NextResponse.json({
     user: { id: user.id, email: user.email, name: user.name },
