@@ -23,12 +23,14 @@ docker compose up -d
 npm install
 
 # 4. Create the database schema + seed
-npx prisma migrate dev
+npx prisma migrate deploy
 npm run db:seed
 
 # 5. Run
 npm run dev
 ```
+
+> Migrations are committed under `prisma/migrations/`. For local dev you can use `npx prisma migrate dev` (interactive, also regenerates the client); for deploy/cold-start use `npx prisma migrate deploy` (non-interactive).
 
 Open http://localhost:3000 → sign in → complete a quiz → download/upload a code session.
 
@@ -124,6 +126,15 @@ draft → ready → in_progress → submitted → grade_requested → graded
 | [docs/UI_SCREENS.md](./docs/UI_SCREENS.md) | Screens |
 | [docs/BUILD_PLAN.md](./docs/BUILD_PLAN.md) | Build order |
 | [docs/ACCEPTANCE.md](./docs/ACCEPTANCE.md) | Done checklist |
+
+## Changelog P0.1 (post-review fixes)
+
+- **Middleware:** `SESSION_CREATE_TOKEN` bearer now allowed through for `POST /api/sessions` and `POST /api/sessions/:id/starter` (Hermes-cron compatible)
+- **Migrations:** initial migration committed under `prisma/migrations/`; production uses `npx prisma migrate deploy`
+- **Grading:** only admin can set status `graded` or write `score`/`feedback`; grading happens via `POST /api/sessions/:id/grade`
+- **Cleanup:** removed duplicate POST transition handler on `[id]/route.ts` (PATCH only)
+- **UI:** sessions list filter includes **Grade requested**
+- **Deploy:** added `Dockerfile`, `.dockerignore`, and `docs/DEPLOY.md`
 
 ## After P0
 

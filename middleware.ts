@@ -4,6 +4,35 @@ import { sessionOptions, type SessionData } from "@/lib/session";
 
 const PUBLIC_API_PREFIXES = ["/api/auth/login", "/api/auth/logout"];
 
+// Constant-time-ish compare to avoid leaking the token via timing.
+function safeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return diff === 0;
+}
+
+// Does this request carry a valid service token for the create/starter routes?
+function isServiceCreateRequest(request: NextRequest): boolean {
+  const token = process.env.SESSION_CREATE_TOKEN;
+  if (!token || token === "change-me-session-create-token") return false;
+
+  const { pathname } = request.nextUrl;
+  const method = request.method;
+
+  const isCreateSession = method === "POST" && pathname === "/api/sessions";
+  const isStarterUpload =
+    method === "POST" && /^\/api\/sessions\/[^/]+\/starter$/.test(pathname);
+
+  if (!isCreateSession && !isStarterUpload) return false;
+
+  const header = request.headers.get("authorization") ?? "";
+  const match = /^Bearer\s+(.+)$/.exec(header);
+  return !!match && safeEqual(match[1], token);
+}
+
 // Middleware only needs to READ the session; iron-session requires a cookie
 // store, so adapt the request's Cookie header into one.
 function cookieStoreFromRequest(request: NextRequest) {
@@ -35,6 +64,9 @@ export async function middleware(request: NextRequest) {
 
   // Public API (login/logout) — no auth needed.
   if (isApi && isPublicApi) return NextResponse.next();
+
+  // Service-token routes (POST /api/sessions, POST /api/sessions/:id/starter).
+  if (isApi && isServiceCreateRequest(request)) return NextResponse.next();
 
   const session = await getIronSession<SessionData>(cookieStoreFromRequest(request), {
     ...sessionOptions,

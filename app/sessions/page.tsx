@@ -10,6 +10,7 @@ const FILTERS = [
   { key: "ready", label: "Ready" },
   { key: "in_progress", label: "In progress" },
   { key: "submitted", label: "Submitted" },
+  { key: "grade_requested", label: "Grade requested" },
   { key: "graded", label: "Graded" },
 ] as const;
 
@@ -32,7 +33,7 @@ export default async function SessionsPage({
   const activeFilter = active ?? "all";
 
   const statusFilter =
-    activeFilter === "all" ? undefined : [activeFilter] as ("ready" | "in_progress" | "submitted" | "graded")[];
+    activeFilter === "all" ? undefined : [activeFilter] as ("ready" | "in_progress" | "submitted" | "grade_requested" | "graded")[];
 
   const sessions = await prisma.drillSession.findMany({
     where: {
