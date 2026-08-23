@@ -1,0 +1,6 @@
+# Workflow & Project Practices
+
+- Wants security-sensitive reviews (e.g. auth token handling, permission gates) treated as real blockers to implement, not suggestions — fixes for all "Blockers" in review docs were expected even when they involved nontrivial rework (scoping a bearer token, restricting an admin-only transition, committing migrations). Confidence: 0.7
+- Wants "Medium" priorities in review docs implemented when time allows, alongside blockers — then explicitly checked off. Confidence: 0.7
+- Likes a final summary that lists what was verified live vs. by code review, and flags anything that couldn't be tested in the current environment (e.g. no Docker/Postgres) rather than claiming full verification. Confidence: 0.7
+- When local setup is blocked (e.g. DB superuser password, missing role/database), will provide secrets in plaintext and expects the agent to autonomously complete the whole environment provisioning and end-to-end verification (create role/database, run migrations + seed, start the server, test all flows) rather than pausing to hand steps back. When reporting a problem, pastes the raw error output (e.g. the Prisma "credentials not valid" error) and expects root-cause diagnosis and a fix, not a restatement of the error. Confidence: 0.7
