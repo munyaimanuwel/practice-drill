@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root { --blue:#2563EB; --purple:#9333EA; --slate-900:#0F172A; --slate-100:#F1F5F9; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body,html { width:1920px; height:600px; overflow:hidden;
+    font-family:'Segoe UI', system-ui, sans-serif; }
+  .hero { width:1920px; height:600px; background:
+      radial-gradient(1200px 600px at 85% -20%, rgba(147,51,234,.14), transparent 60%),
+      radial-gradient(900px 500px at 10% 120%, rgba(37,99,235,.16), transparent 60%),
+      var(--slate-100);
+    display:flex; align-items:center; justify-content:space-between; padding:0 140px; position:relative; }
+  .copy h1 { font-size:76px; font-weight:800; color:var(--slate-900); letter-spacing:-0.02em; line-height:1.05; max-width:880px; }
+  .grad { background:linear-gradient(90deg,var(--blue),var(--purple)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .copy p { margin-top:24px; font-size:28px; color:#475569; max-width:760px; line-height:1.5; }
+  .cta { display:inline-flex; align-items:center; gap:14px; margin-top:44px; background:linear-gradient(135deg,var(--blue),var(--purple));
+         color:#fff; font-size:24px; font-weight:600; padding:20px 40px; border-radius:12px; box-shadow:0 12px 30px rgba(37,99,235,.35); }
+  .marks { position:relative; width:420px; height:420px; flex-shrink:0; }
+  .marks img.main { width:300px; height:300px; border-radius:68px; box-shadow:0 30px 70px rgba(15,23,42,.25); position:absolute; inset:60px; z-index:2; }
+  .ring { position:absolute; border-radius:50%; border:2px solid rgba(37,99,235,.18); }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="copy">
+    <h1>Drill the interview.<br><span class="grad">Before it drills you.</span></h1>
+    <p>Quizzes and code challenges, scheduled like real interviews. Answer in the browser or your IDE, submit, and get graded.</p>
+    <div class="cta">Start a session →</div>
+  </div>
+  <div class="marks">
+    <div class="ring" style="inset:-40px;"></div>
+    <div class="ring" style="inset:20px;"></div>
+    <img class="main" src="../logo/interview-drill-mark.svg" alt="">
+  </div>
+</div>
+</body>
+</html>

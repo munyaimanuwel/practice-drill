@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root { --blue:#2563EB; --purple:#9333EA; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body,html { width:1080px; height:1080px; overflow:hidden; font-family:'Segoe UI', system-ui, sans-serif; }
+  .post { width:1080px; height:1080px; background:linear-gradient(160deg,#0F172A,#1E1B4B 70%,#3B0764);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    padding:90px; position:relative; }
+  .ring { position:absolute; border-radius:50%; border:2px solid rgba(255,255,255,.08); }
+  img.mark { width:260px; height:260px; border-radius:58px; box-shadow:0 30px 80px rgba(0,0,0,.5); z-index:2; }
+  h1 { color:#F8FAFC; font-size:84px; font-weight:800; letter-spacing:-0.02em; line-height:1.06; margin-top:56px; z-index:2; }
+  h1 span { background:linear-gradient(90deg,#93C5FD,#D8B4FE); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  p { color:#94A3B8; font-size:32px; line-height:1.55; margin-top:28px; max-width:760px; z-index:2; }
+  .chips { display:flex; gap:18px; margin-top:44px; z-index:2; }
+  .chip { color:#E2E8F0; font-size:24px; font-weight:600; padding:14px 30px; border:2px solid rgba(255,255,255,.22); border-radius:999px; }
+</style>
+</head>
+<body>
+<div class="post">
+  <div class="ring" style="width:900px;height:900px;"></div>
+  <div class="ring" style="width:700px;height:700px;"></div>
+  <img class="mark" src="../logo/interview-drill-mark.svg" alt="">
+  <h1>Drill the interview.<br><span>Before it drills you.</span></h1>
+  <p>Scheduled quiz and code-challenge sessions. Solve locally, submit a zip, request a grade.</p>
+  <div class="chips"><div class="chip">Quiz mode</div><div class="chip">Code challenges</div><div class="chip">Graded</div></div>
+</div>
+</body>
+</html>

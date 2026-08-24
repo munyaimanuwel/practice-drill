@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interview Drill — Logo Preview</title>
+<style>
+  :root { --blue: #2563EB; --purple: #9333EA; --slate-900: #0F172A; --slate-500: #64748B; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #fff; color: var(--slate-900); padding: 48px; }
+  h1 { font-size: 22px; } .sub { color: var(--slate-500); font-size: 13px; margin-bottom: 32px; }
+  .row { display: flex; gap: 24px; align-items: center; background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+  .label { width: 100%; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--slate-500); }
+  img { image-rendering: auto; }
+</style>
+</head>
+<body>
+<h1>Interview Drill — Logo System</h1>
+<p class="sub">Primary mark: bullseye + drill-check (progress through practice). Alt mark: terminal prompt. Palette from app tokens.</p>
+
+<div class="row"><span class="label">Primary mark — sizes (16 / 32 / 64 / 128 px, favicon test)</span>
+  <img src="interview-drill-mark.svg" width="16" height="16">
+  <img src="interview-drill-mark.svg" width="32" height="32">
+  <img src="interview-drill-mark.svg" width="64" height="64">
+  <img src="interview-drill-mark.svg" width="128" height="128">
+</div>
+
+<div class="row"><span class="label">Alt mark — terminal prompt</span>
+  <img src="interview-drill-mark-alt.svg" width="64" height="64">
+  <img src="interview-drill-mark-alt.svg" width="32" height="32">
+  <img src="interview-drill-mark-alt.svg" width="16" height="16">
+</div>
+
+<div class="row"><span class="label">Lockup on light</span>
+  <img src="interview-drill-lockup.svg" height="48">
+</div>
+
+<div class="row"><span class="label">Lockup on dark</span>
+  <div style="background:#F8FAFC; padding:16px; border-radius:8px;">
+    <img src="interview-drill-lockup-dark.svg" height="56">
+  </div>
+</div>
+</body>
+</html>

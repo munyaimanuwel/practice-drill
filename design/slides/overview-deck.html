@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interview Drill — Overview</title>
+<link rel="stylesheet" href="../tokens.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  /* Slide component tokens derived from semantic layer */
+  :root {
+    --slide-bg: hsl(var(--background));
+    --slide-surface: hsl(var(--card));
+    --slide-fg: hsl(var(--foreground));
+    --slide-muted: hsl(var(--muted-foreground));
+    --slide-primary: hsl(var(--primary));
+    --slide-secondary: hsl(var(--secondary));
+    --slide-border: hsl(var(--border));
+    --typography-font-heading: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:var(--typography-font-heading); background:var(--slide-bg); color:var(--slide-fg); }
+  .deck { position:relative; width:100vw; height:100vh; overflow:hidden; }
+  .slide { position:absolute; inset:0; display:none; flex-direction:column; align-items:center; justify-content:center;
+           text-align:center; padding:8vh 10vw; background:var(--slide-bg); }
+  .slide.active { display:flex; animation:fade .45s ease both; }
+  @keyframes fade { from { opacity:0; transform:translateY(14px);} to { opacity:1; transform:none;} }
+
+  h1 { font-size:clamp(44px, 7vw, 96px); font-weight:800; letter-spacing:-0.02em; line-height:1.05; }
+  h2 { font-size:clamp(30px, 4.2vw, 56px); font-weight:750; letter-spacing:-0.01em; }
+  p.lede { font-size:clamp(18px, 2vw, 28px); color:var(--slide-muted); max-width:900px; margin-top:22px; line-height:1.55; }
+  .grad { background:linear-gradient(90deg,var(--slide-primary),var(--slide-secondary));
+          -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+  .cards { display:flex; gap:26px; margin-top:52px; flex-wrap:wrap; justify-content:center; }
+  .card { width:300px; text-align:left; background:var(--slide-surface); border:1px solid var(--slide-border);
+          border-radius:hsl(var(--radius)); padding:30px; box-shadow:0 10px 30px rgba(15,23,42,.06); }
+  .card .ico { width:46px; height:46px; display:flex; align-items:center; justify-content:center;
+               background:hsl(var(--info-soft)); color:hsl(var(--info)); border-radius:12px; font-size:22px; }
+  .card:nth-child(2) .ico { background:hsl(var(--success-soft)); color:hsl(var(--success)); }
+  .card:nth-child(3) .ico { background:hsl(var(--secondary-soft)); color:hsl(var(--secondary)); }
+  .card h3 { font-size:21px; margin:18px 0 8px; }
+  .card p { font-size:15px; color:var(--slide-muted); line-height:1.6; }
+
+  .flow { display:flex; gap:40px; margin-top:48px; flex-wrap:wrap; justify-content:center; }
+  .steps { width:380px; background:var(--slide-surface); border:1px solid var(--slide-border); border-radius:hsl(var(--radius)); padding:34px; text-align:left; }
+  .steps h3 { font-size:22px; margin-bottom:16px; }
+  .steps h3 em { font-style:normal; font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+                 color:hsl(var(--info-soft-foreground)); background:hsl(var(--info-soft)); padding:4px 12px; border-radius:999px; margin-right:10px; vertical-align:middle; }
+  .code-steps h3 em { color:hsl(var(--success-soft-foreground)); background:hsl(var(--success-soft)); }
+  .steps li { list-style:none; padding:9px 0 9px 30px; position:relative; color:#334155; font-size:16px; }
+  .steps li::before { content:"→"; position:absolute; left:0; color:var(--slide-primary); font-weight:700; }
+  .code-steps li::before { content:"→"; color:hsl(var(--success)); }
+
+  .stack { display:flex; gap:16px; margin-top:44px; flex-wrap:wrap; justify-content:center; }
+  .pill { font-size:17px; font-weight:600; padding:14px 26px; border-radius:999px;
+          border:2px solid var(--slide-border); background:var(--slide-surface); color:#334155; }
+  .pill.hot { border-color:transparent; color:hsl(var(--primary-foreground)); background:var(--slide-primary); }
+
+  .chart-wrap { width:min(760px, 70vw); height:46vh; margin-top:44px; background:var(--slide-surface);
+                border:1px solid var(--slide-border); border-radius:hsl(var(--radius)); padding:26px; }
+
+  .status-grid { display:flex; gap:24px; margin-top:46px; flex-wrap:wrap; justify-content:center; max-width:1000px; }
+  .st { min-width:280px; text-align:left; background:var(--slide-surface); border:1px solid var(--slide-border);
+        border-radius:hsl(var(--radius)); padding:24px 28px; }
+  .st b { font-size:15px; letter-spacing:.06em; text-transform:uppercase; }
+  .st.done b { color:hsl(var(--success)); } .st.next b { color:hsl(var(--warning)); }
+  .st ul { margin-top:10px; } .st li { list-style:none; font-size:15px; color:#334155; padding:5px 0 5px 22px; position:relative; }
+  .st.done li::before { content:"✓"; position:absolute; left:0; color:hsl(var(--success)); font-weight:700; }
+  .st.next li::before { content:"○"; position:absolute; left:0; color:hsl(var(--warning)); font-weight:700; }
+
+  .logo-lg { width:120px; height:120px; border-radius:27px; box-shadow:0 20px 60px rgba(37,99,235,.3); margin-bottom:36px; }
+
+  .progress { position:fixed; left:0; top:0; height:5px; background:linear-gradient(90deg,var(--slide-primary),var(--slide-secondary));
+              width:0%; transition:width .35s ease; z-index:10; }
+  .hint { position:fixed; bottom:22px; right:30px; font-size:13px; color:var(--slide-muted); z-index:10; }
+  .num { position:fixed; bottom:18px; left:30px; font-size:14px; color:var(--slide-muted); z-index:10; }
+</style>
+</head>
+<body>
+<div class="progress" id="bar"></div>
+<div class="num" id="num"></div>
+<div class="hint">← → or click to advance</div>
+
+<div class="deck" id="deck" onclick="next()">
+  <section class="slide active">
+    <img class="logo-lg" src="../logo/interview-drill-mark.svg" alt="">
+    <h1>Interview <span class="grad">Drill</span></h1>
+    <p class="lede">A personal interview practice app — scheduled quizzes and code challenges, answered in the browser or your IDE, then graded.</p>
+  </section>
+
+  <section class="slide">
+    <h2>The problem</h2>
+    <p class="lede">Interview readiness decays without repetition. Random tutorials aren't drills — no schedule, no submission, no feedback loop.</p>
+    <div class="cards">
+      <div class="card"><div class="ico">⏰</div><h3>Ad hoc study</h3><p>Practice happens only when motivation strikes, not on a plan.</p></div>
+      <div class="card"><div class="ico">🧩</div><h3>No real format</h3><p>Reading ≠ answering questions under time pressure.</p></div>
+      <div class="card"><div class="ico">📭</div><h3>No feedback</h3><p>Solved challenges sit unreviewed in folders.</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h2>What it is</h2>
+    <p class="lede">Single-user web app that schedules drill sessions and closes the loop: answer → submit → request grade.</p>
+    <div class="cards">
+      <div class="card"><div class="ico">📝</div><h3>Quiz sessions</h3><p>Timed question sets answered directly in the browser, saved as drafts until final submit.</p></div>
+      <div class="card"><div class="ico">💻</div><h3>Code challenges</h3><p>Download a starter pack, solve in Cursor/VS locally, upload your solution zip.</p></div>
+      <div class="card"><div class="ico">🎯</div><h3>Graded review</h3><p>Mark any session "request grade" and get score plus written feedback.</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h2>Two flows, one loop</h2>
+    <div class="flow">
+      <div class="steps">
+        <h3><em>Quiz</em>In the browser</h3>
+        <ul><li>Pick session from dashboard</li><li>Answer each question</li><li>Save draft anytime</li><li>Submit &amp; request grade</li></ul>
+      </div>
+      <div class="steps code-steps">
+        <h3><em>Code</em>In your IDE</h3>
+        <ul><li>Download starter zip</li><li>Open in Cursor / VS</li><li>Solve locally</li><li>Upload solution zip → grade</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h2>Momentum, measured</h2>
+    <p class="lede">Sessions completed per week since launch of the drill habit.</p>
+    <div class="chart-wrap"><canvas id="progress"></canvas></div>
+  </section>
+
+  <section class="slide">
+    <h2>Boring stack, on purpose</h2>
+    <p class="lede">Optimized for maintainability by one person. No sandboxed execution of uploads — grading is manual or agent-assisted later.</p>
+    <div class="stack">
+      <span class="pill hot">Next.js 15</span><span class="pill">TypeScript strict</span><span class="pill">Tailwind + design tokens</span>
+      <span class="pill">Prisma</span><span class="pill hot">PostgreSQL</span><span class="pill">iron-session + bcrypt</span>
+      <span class="pill">Docker Compose</span><span class="pill">Local disk storage</span>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h2>Status &amp; roadmap</h2>
+    <div class="status-grid">
+      <div class="st done"><b>P0 — shipped</b>
+        <ul><li>Login + session dashboard</li><li>Quiz flow end-to-end</li><li>Starter download / zip upload</li><li>Request-grade transition</li></ul></div>
+      <div class="st next"><b>P1 — planned</b>
+        <ul><li>Hermes cron creates sessions via service token</li><li>Agent-assisted grading</li><li>Deploy to Dokploy VPS</li></ul></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <img class="logo-lg" src="../logo/interview-drill-mark-alt.svg" alt="">
+    <h2>Ready to <span class="grad">drill?</span></h2>
+    <p class="lede">Next session starts Tuesday. Bring your IDE.</p>
+  </section>
+</div>
+
+<script>
+const slides = [...document.querySelectorAll(".slide")];
+let i = 0;
+function render() {
+  slides.forEach((s, k) => s.classList.toggle("active", k === i));
+  document.getElementById("bar").style.width = ((i + 1) / slides.length * 100) + "%";
+  document.getElementById("num").textContent = (i + 1) + " / " + slides.length;
+}
+function next() { i = Math.min(i + 1, slides.length - 1); render(); }
+addEventListener("keydown", e => {
+  if (e.key === "ArrowRight") { i = Math.min(i + 1, slides.length - 1); render(); }
+  if (e.key === "ArrowLeft")  { i = Math.max(i - 1, 0); render(); }
+});
+render();
+
+/* Brand colors straight from the token sheet */
+const cs = getComputedStyle(document.documentElement);
+const tok = n => `hsl(${cs.getPropertyValue(n).trim()})`;
+new Chart(document.getElementById("progress"), {
+  type: "line",
+  data: {
+    labels: ["Wk 1", "Wk 2", "Wk 3", "Wk 4", "Wk 5", "Wk 6"],
+    datasets: [{
+      label: "Sessions completed",
+      data: [2, 3, 5, 4, 7, 9],
+      borderColor: tok("--primary"),
+      backgroundColor: "rgba(37,99,235,0.08)",
+      fill: true, tension: 0.4, borderWidth: 3,
+      pointBackgroundColor: tok("--secondary"), pointRadius: 5
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: tok("--foreground") } } },
+    scales: {
+      x: { ticks: { color: tok("--muted-foreground") }, grid: { color: tok("--border") } },
+      y: { ticks: { color: tok("--muted-foreground") }, grid: { color: tok("--border") }, beginAtZero: true }
+    }
+  }
+});
+</script>
+</body>
+</html>

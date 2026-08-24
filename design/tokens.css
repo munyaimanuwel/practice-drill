@@ -1,0 +1,145 @@
+/*
+ * Interview Drill — design tokens
+ *
+ * Three layers: primitive -> semantic -> component
+ *   1. Primitives  raw palette values (never used directly by components)
+ *   2. Semantic    purpose-based aliases (what Tailwind maps to)
+ *   3. Component   per-component values derived from semantics
+ *
+ * Format: space-separated HSL channels without hsl() so Tailwind can apply
+ * opacity modifiers, e.g. bg-primary/50 -> hsl(var(--primary) / 0.5).
+ */
+
+:root {
+    /* ------------------------------------------------------------- */
+    /* 1. Primitives                                                 */
+    /* ------------------------------------------------------------- */
+    /* Neutral (slate) */
+    --slate-50: 210 40% 98%;
+    --slate-100: 210 40% 96%;
+    --slate-200: 214 32% 91%;
+    --slate-300: 213 27% 84%;
+    --slate-400: 215 20% 65%;
+    --slate-500: 215 16% 47%;
+    --slate-700: 215 25% 27%;
+    --slate-800: 217 33% 18%;
+    --slate-900: 222 47% 11%;
+
+    /* Brand accent (blue) */
+    --blue-100: 214 95% 93%;
+    --blue-300: 212 96% 78%;
+    --blue-500: 217 91% 60%;
+    --blue-600: 221 83% 53%;
+    --blue-700: 224 76% 48%;
+    --blue-800: 227 69% 40%;
+
+    /* Secondary accent (purple) */
+    --purple-100: 269 100% 96%;
+    --purple-600: 272 81% 56%;
+    --purple-700: 272 72% 47%;
+    --purple-800: 273 67% 39%;
+
+    /* Status (green / amber / red) */
+    --green-100: 141 84% 93%;
+    --green-700: 142 72% 29%;
+    --green-800: 143 64% 24%;
+
+    --amber-50: 48 100% 96%;
+    --amber-200: 48 97% 77%;
+    --amber-700: 26 90% 37%;
+    --amber-800: 23 83% 31%;
+    --amber-900: 22 78% 27%;
+
+    --red-50: 0 86% 97%;
+    --red-100: 0 94% 94%;
+    --red-600: 0 72% 51%;
+    --red-700: 0 74% 42%;
+
+    /* White */
+    --white: 0 0% 100%;
+
+    /* ------------------------------------------------------------- */
+    /* 2. Semantic                                                   */
+    /* ------------------------------------------------------------- */
+    /* Surfaces & text */
+    --background: var(--slate-100);
+    --foreground: var(--slate-900);
+    --card: var(--white);
+    --card-foreground: var(--foreground);
+
+    /* Primary actions (blue) */
+    --primary: var(--blue-600);
+    --primary-hover: var(--blue-700);
+    --primary-foreground: var(--white);
+
+    /* Secondary / "request grade" actions (purple) */
+    --secondary: var(--purple-600);
+    --secondary-hover: var(--purple-700);
+    --secondary-foreground: var(--white);
+    --secondary-soft: var(--purple-100);
+    --secondary-soft-foreground: var(--purple-800);
+
+    /* Quiet surfaces & de-emphasised text */
+    --muted: var(--slate-200);
+    --muted-foreground: var(--slate-500);
+
+    /* Subtle fill for hover states and inline code */
+    --accent: var(--slate-100);
+    --accent-foreground: var(--foreground);
+
+    /* Info (submitted / quiz) */
+    --info: var(--blue-600);
+    --info-soft: var(--blue-100);
+    --info-soft-foreground: var(--blue-800);
+
+    /* Success (ready / code challenge) */
+    --success: var(--green-700);
+    --success-soft: var(--green-100);
+    --success-soft-foreground: var(--green-800);
+
+    /* Warning (in progress / hints) */
+    --warning: var(--amber-700);
+    --warning-strong: var(--amber-900);
+    --warning-soft: var(--amber-50);
+    --warning-soft-foreground: var(--amber-800);
+    --warning-border: var(--amber-200);
+
+    /* Destructive (errors / cancelled) */
+    --destructive: var(--red-600);
+    --destructive-soft: var(--red-50);
+    --destructive-soft-foreground: var(--red-700);
+
+    /* Lines & focus */
+    --border: var(--slate-200);
+    --input: var(--slate-300);
+    --ring: var(--blue-500);
+
+    /* Shape */
+    --radius: 0.5rem;
+
+    /* ------------------------------------------------------------- */
+    /* 3. Component                                                  */
+    /* ------------------------------------------------------------- */
+    --button-radius: calc(var(--radius) - 2px);
+    --input-radius: calc(var(--radius) - 2px);
+    --card-radius: var(--radius);
+    --badge-radius: 9999px;
+  }
+
+  /*
+   * Dark theme scaffold — semantic layer makes this a pure variable swap.
+   * Unused until a toggle ships; add .dark to <html> to activate.
+   */
+  .dark {
+    --background: var(--slate-900);
+    --foreground: var(--slate-100);
+    --card: 222 47% 8%;
+    --card-foreground: var(--slate-100);
+
+    --muted: var(--slate-800);
+    --muted-foreground: var(--slate-400);
+    --accent: var(--slate-800);
+
+    --border: var(--slate-800);
+    --input: var(--slate-700);
+  }
