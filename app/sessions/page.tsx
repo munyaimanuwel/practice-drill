@@ -46,11 +46,11 @@ export default async function SessionsPage({
 
   return (
     <div className="min-h-screen">
-      <header className="border-b border-slate-200 bg-white">
+      <header className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <div>
-            <h1 className="text-lg font-semibold text-slate-900">Interview Drill</h1>
-            <p className="text-sm text-slate-500">{user.name}</p>
+            <h1 className="text-lg font-semibold text-foreground">Interview Drill</h1>
+            <p className="text-sm text-muted-foreground">{user.name}</p>
           </div>
           <LogoutButton />
         </div>
@@ -68,8 +68,8 @@ export default async function SessionsPage({
               href={f.key === "all" ? "/sessions" : `/sessions?status=${f.key}`}
               className={`rounded-full px-3 py-1 text-sm font-medium ${
                 activeFilter === f.key
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-card text-muted-foreground hover:bg-accent border border-border"
               }`}
             >
               {f.label}
@@ -78,9 +78,9 @@ export default async function SessionsPage({
         </div>
 
         {sessions.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-12 text-center">
-            <p className="text-slate-500">No sessions yet.</p>
-            <p className="mt-1 text-sm text-slate-400">
+          <div className="rounded-lg border border-dashed border-input bg-card p-12 text-center">
+            <p className="text-muted-foreground">No sessions yet.</p>
+            <p className="mt-1 text-sm text-muted-foreground">
               Run seed or create via API — see README.
             </p>
           </div>
@@ -90,7 +90,7 @@ export default async function SessionsPage({
               <li key={s.id}>
                 <Link
                   href={`/sessions/${s.id}`}
-                  className="block rounded-lg border border-slate-200 bg-white p-4 transition hover:border-blue-300 hover:shadow-sm"
+                  className="block rounded-lg border border-border bg-card p-4 transition hover:border-ring hover:shadow-sm"
                 >
                   <div className="flex items-center justify-between gap-4">
                     <div className="min-w-0">
@@ -98,18 +98,18 @@ export default async function SessionsPage({
                         <SessionTypeBadge type={s.type} />
                         <StatusBadge status={s.status} />
                       </div>
-                      <h3 className="mt-2 truncate font-medium text-slate-900">{s.title}</h3>
+                      <h3 className="mt-2 truncate font-medium text-foreground">{s.title}</h3>
                       {s.summary && (
-                        <p className="mt-1 line-clamp-2 text-sm text-slate-500">{s.summary}</p>
+                        <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{s.summary}</p>
                       )}
                     </div>
                     <div className="flex shrink-0 flex-col items-end gap-1 text-sm">
                       {s.scheduledFor && (
-                        <span className="text-slate-500">Scheduled {formatDate(s.scheduledFor)}</span>
+                        <span className="text-muted-foreground">Scheduled {formatDate(s.scheduledFor)}</span>
                       )}
-                      <span className="text-slate-400">Difficulty {s.difficulty}/5</span>
+                      <span className="text-muted-foreground">Difficulty {s.difficulty}/5</span>
                       {s.score !== null && (
-                        <span className="font-semibold text-slate-700">{s.score}/100</span>
+                        <span className="font-semibold text-foreground">{s.score}/100</span>
                       )}
                     </div>
                   </div>

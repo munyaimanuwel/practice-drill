@@ -22,8 +22,8 @@ export default function SessionDetailPage() {
   if (error) {
     return (
       <div className="mx-auto max-w-3xl px-6 py-16 text-center">
-        <p className="text-slate-600">{error}</p>
-        <Link href="/sessions" className="mt-4 inline-block text-sm text-blue-600 underline">
+        <p className="text-muted-foreground">{error}</p>
+        <Link href="/sessions" className="mt-4 inline-block text-sm text-primary underline">
           Back to sessions
         </Link>
       </div>
@@ -32,7 +32,7 @@ export default function SessionDetailPage() {
 
   if (!session) {
     return (
-      <div className="mx-auto max-w-3xl px-6 py-16 text-center text-slate-500">Loading…</div>
+      <div className="mx-auto max-w-3xl px-6 py-16 text-center text-muted-foreground">Loading…</div>
     );
   }
 
@@ -40,12 +40,12 @@ export default function SessionDetailPage() {
 
   return (
     <div className="min-h-screen">
-      <header className="border-b border-slate-200 bg-white">
+      <header className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <div>
-            <h1 className="text-lg font-semibold text-slate-900">{session.title}</h1>
-            <p className="text-sm text-slate-500">
-              <Link href="/sessions" className="text-blue-600 underline">
+            <h1 className="text-lg font-semibold text-foreground">{session.title}</h1>
+            <p className="text-sm text-muted-foreground">
+              <Link href="/sessions" className="text-primary underline">
                 ← All sessions
               </Link>
             </p>
@@ -58,14 +58,14 @@ export default function SessionDetailPage() {
       </header>
 
       <main className="mx-auto max-w-5xl px-6 py-8">
-        <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-1 text-sm text-slate-500">
-          {session.summary && <p className="w-full text-slate-600">{session.summary}</p>}
+        <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-1 text-sm text-muted-foreground">
+          {session.summary && <p className="w-full text-muted-foreground">{session.summary}</p>}
           <span>Difficulty {session.difficulty}/5</span>
           <span>Time limit {session.timeLimitMinutes} min</span>
           {session.topicTags.length > 0 && (
             <span className="flex flex-wrap gap-1">
               {session.topicTags.map((t) => (
-                <span key={t} className="rounded bg-slate-200 px-2 py-0.5 text-xs text-slate-600">
+                <span key={t} className="rounded bg-muted px-2 py-0.5 text-xs text-muted-foreground">
                   {t}
                 </span>
               ))}

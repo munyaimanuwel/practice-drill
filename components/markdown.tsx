@@ -15,7 +15,7 @@ function renderInline(text: string): React.ReactNode[] {
   return parts.map((part, i) => {
     if (part.startsWith("`") && part.endsWith("`")) {
       return (
-        <code key={i} className="rounded bg-slate-100 px-1 py-0.5 font-mono text-sm">
+        <code key={i} className="rounded bg-accent px-1 py-0.5 font-mono text-sm">
           {escapeHtml(part.slice(1, -1))}
         </code>
       );
@@ -29,7 +29,7 @@ function renderInline(text: string): React.ReactNode[] {
     const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
     if (link) {
       return (
-        <a key={i} href={link[2]} target="_blank" rel="noreferrer" className="text-blue-600 underline">
+        <a key={i} href={link[2]} target="_blank" rel="noreferrer" className="text-primary underline">
           {link[1]}
         </a>
       );
@@ -66,7 +66,7 @@ export default function Markdown({ source }: { source: string }) {
         codeBuf = [];
       } else {
         blocks.push(
-          <pre key={key++} className="my-3 overflow-x-auto rounded-md bg-slate-900 p-3 font-mono text-sm text-slate-100">
+          <pre key={key++} className="my-3 overflow-x-auto rounded-md bg-foreground p-3 font-mono text-sm text-background">
             {codeBuf.join("\n")}
           </pre>
         );
@@ -99,12 +99,12 @@ export default function Markdown({ source }: { source: string }) {
   }
   if (inCode) {
     blocks.push(
-      <pre key={key++} className="my-3 overflow-x-auto rounded-md bg-slate-900 p-3 font-mono text-sm text-slate-100">
+      <pre key={key++} className="my-3 overflow-x-auto rounded-md bg-foreground p-3 font-mono text-sm text-background">
         {codeBuf.join("\n")}
       </pre>
     );
   }
   flushList();
 
-  return <div className="prose-sm max-w-none text-sm leading-6 text-slate-700">{blocks}</div>;
+  return <div className="prose-sm max-w-none text-sm leading-6 text-foreground">{blocks}</div>;
 }

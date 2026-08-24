@@ -119,12 +119,12 @@ export default function QuizForm({ session, questions, initialAnswers }: Props) 
         <button
           onClick={startSession}
           disabled={status !== "ready" || busy !== null}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
         >
           {status === "ready" ? "Start" : "Started"}
         </button>
-        <span className="text-sm text-slate-500">
-          Status: <span className="font-medium text-slate-700">{status.replace("_", " ")}</span>
+        <span className="text-sm text-muted-foreground">
+          Status: <span className="font-medium text-foreground">{status.replace("_", " ")}</span>
         </span>
       </div>
 
@@ -132,13 +132,13 @@ export default function QuizForm({ session, questions, initialAnswers }: Props) 
         <>
           <div className="space-y-6">
             {questions.map((q, idx) => (
-              <div key={q.id} className="rounded-lg border border-slate-200 bg-white p-5">
+              <div key={q.id} className="rounded-lg border border-border bg-card p-5">
                 <div className="mb-2 flex items-start justify-between gap-3">
-                  <p className="font-medium text-slate-900">
+                  <p className="font-medium text-foreground">
                     {idx + 1}. {q.prompt}
                   </p>
                   {q.points && (
-                    <span className="shrink-0 text-xs font-medium text-slate-400">{q.points} pts</span>
+                    <span className="shrink-0 text-xs font-medium text-muted-foreground">{q.points} pts</span>
                   )}
                 </div>
                 <textarea
@@ -146,7 +146,7 @@ export default function QuizForm({ session, questions, initialAnswers }: Props) 
                   value={answers[q.id] ?? ""}
                   onChange={(e) => setAnswer(q.id, e.target.value)}
                   rows={5}
-                  className="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="mt-2 w-full rounded-md border border-input px-3 py-2 text-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
                   placeholder="Type your answer..."
                 />
               </div>
@@ -157,14 +157,14 @@ export default function QuizForm({ session, questions, initialAnswers }: Props) 
             <button
               onClick={saveDraft}
               disabled={busy !== null}
-              className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-md border border-input bg-card px-4 py-2 text-sm font-medium text-foreground hover:bg-accent disabled:cursor-not-allowed disabled:opacity-50"
             >
               {busy === "draft" ? "Saving..." : "Save draft"}
             </button>
             <button
               onClick={submitAnswers}
               disabled={busy !== null || isFinalized}
-              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
             >
               {busy === "submit" ? "Submitting..." : "Submit answers"}
             </button>
@@ -172,7 +172,7 @@ export default function QuizForm({ session, questions, initialAnswers }: Props) 
               <button
                 onClick={requestGrade}
                 disabled={busy !== null}
-                className="rounded-md bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground hover:bg-secondary-hover disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {busy === "grade" ? "Requesting..." : "Request grade"}
               </button>
@@ -182,31 +182,31 @@ export default function QuizForm({ session, questions, initialAnswers }: Props) 
       )}
 
       {status === "submitted" && !showGrade && (
-        <div className="mt-4 rounded-md bg-blue-50 px-4 py-3 text-sm text-blue-800">
+        <div className="mt-4 rounded-md bg-info-soft px-4 py-3 text-sm text-info-soft-foreground">
           Answers submitted. You can still edit them below; click <strong>Request grade</strong> when done.
         </div>
       )}
 
       {status === "grade_requested" && (
-        <div className="mt-4 rounded-md bg-purple-50 px-4 py-3 text-sm text-purple-800">
+        <div className="mt-4 rounded-md bg-secondary-soft px-4 py-3 text-sm text-secondary-soft-foreground">
           Grade requested — waiting for a human or agent review.
         </div>
       )}
 
       {showGrade && (
-        <div className="mt-6 rounded-lg border border-slate-200 bg-white p-5">
+        <div className="mt-6 rounded-lg border border-border bg-card p-5">
           <div className="flex items-center gap-3">
-            <span className="text-2xl font-semibold text-slate-900">{session.score ?? "—"}/100</span>
-            <span className="text-sm text-slate-500">Graded</span>
+            <span className="text-2xl font-semibold text-foreground">{session.score ?? "—"}/100</span>
+            <span className="text-sm text-muted-foreground">Graded</span>
           </div>
           {session.feedback && (
-            <div className="mt-3 whitespace-pre-wrap text-sm text-slate-700">{session.feedback}</div>
+            <div className="mt-3 whitespace-pre-wrap text-sm text-foreground">{session.feedback}</div>
           )}
         </div>
       )}
 
       {error && (
-        <div role="alert" className="mt-4 rounded-md bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div role="alert" className="mt-4 rounded-md bg-destructive-soft px-4 py-3 text-sm text-destructive-soft-foreground">
           {error}
         </div>
       )}

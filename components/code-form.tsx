@@ -114,39 +114,39 @@ export default function CodeForm({ session }: Props) {
         <button
           onClick={startSession}
           disabled={status !== "ready" || busy !== null}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
         >
           {status === "ready" ? "Start" : "Started"}
         </button>
-        <span className="text-sm text-slate-500">
-          Status: <span className="font-medium text-slate-700">{status.replace("_", " ")}</span>
+        <span className="text-sm text-muted-foreground">
+          Status: <span className="font-medium text-foreground">{status.replace("_", " ")}</span>
         </span>
       </div>
 
       <div className="mb-6 grid gap-6 lg:grid-cols-2">
-        <section className="rounded-lg border border-slate-200 bg-white p-5">
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Brief</h2>
+        <section className="rounded-lg border border-border bg-card p-5">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Brief</h2>
           {session.payload.brief_markdown ? (
             <Markdown source={session.payload.brief_markdown} />
           ) : (
-            <p className="text-sm text-slate-500">No brief provided.</p>
+            <p className="text-sm text-muted-foreground">No brief provided.</p>
           )}
         </section>
 
-        <section className="rounded-lg border border-slate-200 bg-white p-5">
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Rubric</h2>
+        <section className="rounded-lg border border-border bg-card p-5">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Rubric</h2>
           {session.payload.rubric_markdown ? (
             <Markdown source={session.payload.rubric_markdown} />
           ) : (
-            <p className="text-sm text-slate-500">No rubric provided.</p>
+            <p className="text-sm text-muted-foreground">No rubric provided.</p>
           )}
         </section>
       </div>
 
       {session.payload.hints && session.payload.hints.length > 0 && (
-        <div className="mb-6 rounded-lg border border-amber-200 bg-amber-50 p-5">
-          <h2 className="mb-2 text-sm font-semibold text-amber-800">Hints</h2>
-          <ul className="list-disc space-y-1 pl-5 text-sm text-amber-900">
+        <div className="mb-6 rounded-lg border border-warning-border bg-warning-soft p-5">
+          <h2 className="mb-2 text-sm font-semibold text-warning-soft-foreground">Hints</h2>
+          <ul className="list-disc space-y-1 pl-5 text-sm text-warning-strong">
             {session.payload.hints.map((h, i) => (
               <li key={i}>{h}</li>
             ))}
@@ -154,11 +154,11 @@ export default function CodeForm({ session }: Props) {
         </div>
       )}
 
-      <div className="rounded-lg border border-slate-200 bg-white p-5">
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">
+      <div className="rounded-lg border border-border bg-card p-5">
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
           Work in your IDE
         </h2>
-        <ol className="list-decimal space-y-1 pl-5 text-sm text-slate-700">
+        <ol className="list-decimal space-y-1 pl-5 text-sm text-foreground">
           <li>Download the starter pack below.</li>
           <li>Unzip it and open the folder in Cursor or VS Code (or the .sln in Visual Studio).</li>
           <li>Solve the challenge locally.</li>
@@ -169,7 +169,7 @@ export default function CodeForm({ session }: Props) {
           {session.hasStarter && (
             <a
               href={`/api/sessions/${session.id}/starter`}
-              className="rounded-md bg-slate-800 px-4 py-2 text-sm font-medium text-white hover:bg-slate-900"
+              className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background hover:bg-foreground/80"
             >
               Download starter (.zip)
             </a>
@@ -177,7 +177,7 @@ export default function CodeForm({ session }: Props) {
 
           {canUpload && (
             <>
-              <label className="cursor-pointer rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">
+              <label className="cursor-pointer rounded-md border border-input bg-card px-4 py-2 text-sm font-medium text-foreground hover:bg-accent">
                 {hasSubmission ? "Replace submission" : "Upload submission (.zip)"}
                 <input
                   ref={fileRef}
@@ -189,7 +189,7 @@ export default function CodeForm({ session }: Props) {
                 />
               </label>
               {busy === "upload" && (
-                <span className="text-sm text-slate-500">
+                <span className="text-sm text-muted-foreground">
                   {progress !== null ? `${progress}%` : "Uploading..."}
                 </span>
               )}
@@ -200,7 +200,7 @@ export default function CodeForm({ session }: Props) {
             <button
               onClick={requestGrade}
               disabled={busy !== null}
-              className="rounded-md bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground hover:bg-secondary-hover disabled:cursor-not-allowed disabled:opacity-50"
             >
               {busy === "grade" ? "Requesting..." : "Request grade"}
             </button>
@@ -208,32 +208,32 @@ export default function CodeForm({ session }: Props) {
         </div>
 
         {hasSubmission && (
-          <p className="mt-3 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-muted-foreground">
             Submission uploaded. You can replace it until it&apos;s graded.
           </p>
         )}
       </div>
 
       {status === "grade_requested" && (
-        <div className="mt-4 rounded-md bg-purple-50 px-4 py-3 text-sm text-purple-800">
+        <div className="mt-4 rounded-md bg-secondary-soft px-4 py-3 text-sm text-secondary-soft-foreground">
           Grade requested — waiting for a human or agent review.
         </div>
       )}
 
       {status === "graded" && (
-        <div className="mt-6 rounded-lg border border-slate-200 bg-white p-5">
+        <div className="mt-6 rounded-lg border border-border bg-card p-5">
           <div className="flex items-center gap-3">
-            <span className="text-2xl font-semibold text-slate-900">{session.score ?? "—"}/100</span>
-            <span className="text-sm text-slate-500">Graded</span>
+            <span className="text-2xl font-semibold text-foreground">{session.score ?? "—"}/100</span>
+            <span className="text-sm text-muted-foreground">Graded</span>
           </div>
           {session.feedback && (
-            <div className="mt-3 whitespace-pre-wrap text-sm text-slate-700">{session.feedback}</div>
+            <div className="mt-3 whitespace-pre-wrap text-sm text-foreground">{session.feedback}</div>
           )}
         </div>
       )}
 
       {error && (
-        <div role="alert" className="mt-4 rounded-md bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div role="alert" className="mt-4 rounded-md bg-destructive-soft px-4 py-3 text-sm text-destructive-soft-foreground">
           {error}
         </div>
       )}
