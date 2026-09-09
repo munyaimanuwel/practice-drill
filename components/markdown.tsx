@@ -2,21 +2,13 @@
 // Only supports headings, lists, bold/italic, inline code, code fences, links, paragraphs.
 import React from "react";
 
-function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
 function renderInline(text: string): React.ReactNode[] {
   const parts = text.split(/(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\([^)]+\))/g);
   return parts.map((part, i) => {
     if (part.startsWith("`") && part.endsWith("`")) {
       return (
         <code key={i} className="rounded bg-accent px-1 py-0.5 font-mono text-sm">
-          {escapeHtml(part.slice(1, -1))}
+          {part.slice(1, -1)}
         </code>
       );
     }
@@ -34,7 +26,7 @@ function renderInline(text: string): React.ReactNode[] {
         </a>
       );
     }
-    return <React.Fragment key={i}>{escapeHtml(part)}</React.Fragment>;
+    return <React.Fragment key={i}>{part}</React.Fragment>;
   });
 }
 

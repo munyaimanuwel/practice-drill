@@ -2,28 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="../_brand.css">
 <style>
-  :root { --blue:#2563EB; --purple:#9333EA; }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body,html { width:1200px; height:675px; overflow:hidden; font-family:'Segoe UI', system-ui, sans-serif; }
-  .post { width:1200px; height:675px; background:#F8FAFC;
-    display:flex; align-items:center; gap:70px; padding:0 90px; position:relative; overflow:hidden; }
-  .blob { position:absolute; border-radius:50%; filter:blur(80px); opacity:.35; }
-  .b1 { width:480px; height:480px; background:var(--blue); top:-200px; right:-140px; }
-  .b2 { width:380px; height:380px; background:var(--purple); bottom:-190px; left:-120px; }
-  img.mark { width:230px; height:230px; border-radius:52px; box-shadow:0 24px 60px rgba(37,99,235,.3); z-index:2; flex-shrink:0; }
-  h1 { font-size:64px; font-weight:800; color:#0F172A; letter-spacing:-0.02em; line-height:1.08; z-index:2; }
-  h1 span { background:linear-gradient(90deg,var(--blue),var(--purple)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  p { font-size:26px; color:#475569; line-height:1.5; margin-top:20px; max-width:600px; z-index:2; }
+  body,html { width:1200px; height:675px; overflow:hidden; font-family: var(--font-sans); }
+  .post { width:1200px; height:675px; background: var(--paper);
+    display:flex; align-items:center; gap:56px; padding:0 90px 0 102px; position:relative; }
+  .post::before { content:""; position:absolute; left:0; top:0; bottom:0; width:12px; background: var(--grad); }
+  img.mark { width:200px; height:200px; flex-shrink:0; }
+  h1 { font-family: var(--font-display); font-size:56px; font-weight:700; color: var(--ink); letter-spacing:-0.03em; line-height:1.08; }
+  h1 span { background: var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  p { font-size:24px; color: var(--muted); line-height:1.5; margin-top:18px; max-width:620px; }
 </style>
 </head>
 <body>
 <div class="post">
-  <div class="blob b1"></div><div class="blob b2"></div>
   <img class="mark" src="../logo/interview-drill-mark.svg" alt="">
   <div>
     <h1>Interview prep,<br><span>on a schedule.</span></h1>
-    <p>I built Interview Drill: timed quizzes + code challenges I download, solve in my IDE, and submit for grading.</p>
+    <p>Timed quizzes and code challenges I download, solve in my IDE, and submit for grading.</p>
   </div>
 </div>
 </body>

@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap");
+
+:root {
+  --blue: #2563eb;
+  --violet: #7c3aed;
+  --ink: #0c1b33;
+  --paper: #e8eef6;
+  --surface: #ffffff;
+  --muted: #5b6b80;
+  --line: #c9d6e8;
+  --white: #f8fbff;
+  --grad: linear-gradient(135deg, var(--blue), var(--violet));
+  --font-display: Syne, sans-serif;
+  --font-sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}

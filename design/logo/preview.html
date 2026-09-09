@@ -3,41 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <title>Interview Drill — Logo Preview</title>
+<link rel="stylesheet" href="../_brand.css">
 <style>
-  :root { --blue: #2563EB; --purple: #9333EA; --slate-900: #0F172A; --slate-500: #64748B; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #fff; color: var(--slate-900); padding: 48px; }
-  h1 { font-size: 22px; } .sub { color: var(--slate-500); font-size: 13px; margin-bottom: 32px; }
-  .row { display: flex; gap: 24px; align-items: center; background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 24px; margin-bottom: 16px; flex-wrap: wrap; }
-  .label { width: 100%; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--slate-500); }
-  img { image-rendering: auto; }
+  body { font-family: var(--font-sans); background: var(--paper); color: var(--ink); padding: 48px; }
+  h1 { font-family: var(--font-display); font-size: 28px; font-weight: 600; }
+  .sub { color: var(--muted); font-size: 14px; margin: 8px 0 32px; max-width: 640px; line-height: 1.5; }
+  .row { display: flex; gap: 24px; align-items: center; background: var(--surface); border: 1px solid var(--line); padding: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+  .label { width: 100%; font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+  .ink { background: var(--ink); padding: 20px; }
 </style>
 </head>
 <body>
-<h1>Interview Drill — Logo System</h1>
-<p class="sub">Primary mark: bullseye + drill-check (progress through practice). Alt mark: terminal prompt. Palette from app tokens.</p>
+<h1>Interview Drill — Logo system</h1>
+<p class="sub">Range-target mark: ring, crosshair ticks, inner ring, diamond. Means precision practice. v1 bullseye-check is in archive/.</p>
 
-<div class="row"><span class="label">Primary mark — sizes (16 / 32 / 64 / 128 px, favicon test)</span>
-  <img src="interview-drill-mark.svg" width="16" height="16">
-  <img src="interview-drill-mark.svg" width="32" height="32">
-  <img src="interview-drill-mark.svg" width="64" height="64">
-  <img src="interview-drill-mark.svg" width="128" height="128">
+<div class="row"><span class="label">Primary tile — 16 / 32 / 64 / 128</span>
+  <img src="interview-drill-mark.svg" width="16" height="16" alt="">
+  <img src="interview-drill-mark.svg" width="32" height="32" alt="">
+  <img src="interview-drill-mark.svg" width="64" height="64" alt="">
+  <img src="interview-drill-mark.svg" width="128" height="128" alt="">
 </div>
 
-<div class="row"><span class="label">Alt mark — terminal prompt</span>
-  <img src="interview-drill-mark-alt.svg" width="64" height="64">
-  <img src="interview-drill-mark-alt.svg" width="32" height="32">
-  <img src="interview-drill-mark-alt.svg" width="16" height="16">
+<div class="row"><span class="label">Standalone ring (transparent)</span>
+  <img src="interview-drill-mark-standalone.svg" width="96" height="96" alt="">
+  <img src="interview-drill-mark-standalone.svg" width="48" height="48" alt="">
+  <img src="interview-drill-mark-standalone.svg" width="24" height="24" alt="">
 </div>
 
-<div class="row"><span class="label">Lockup on light</span>
-  <img src="interview-drill-lockup.svg" height="48">
+<div class="row"><span class="label">Mono (currentColor via CSS)</span>
+  <img src="interview-drill-mark-mono.svg" width="64" height="64" alt="" style="color:#2563EB">
+  <div class="ink"><img src="interview-drill-mark-mono.svg" width="64" height="64" alt="" style="filter:invert(1)"></div>
 </div>
 
-<div class="row"><span class="label">Lockup on dark</span>
-  <div style="background:#F8FAFC; padding:16px; border-radius:8px;">
-    <img src="interview-drill-lockup-dark.svg" height="56">
-  </div>
+<div class="row"><span class="label">Alt — code prompt</span>
+  <img src="interview-drill-mark-alt.svg" width="64" height="64" alt="">
+  <img src="interview-drill-mark-alt.svg" width="32" height="32" alt="">
+</div>
+
+<div class="row"><span class="label">Lockup on paper</span>
+  <img src="interview-drill-lockup.svg" height="48" alt="Interview Drill">
+</div>
+
+<div class="row ink"><span class="label" style="color:#94A3B8">Lockup on ink</span>
+  <img src="interview-drill-lockup-dark.svg" height="48" alt="Interview Drill">
 </div>
 </body>
 </html>

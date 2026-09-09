@@ -3,26 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Interview Drill — Icon Set</title>
+<link rel="stylesheet" href="../_brand.css">
 <style>
-  body { font-family: 'Segoe UI', system-ui, sans-serif; padding: 48px; background: #fff; color: #0F172A; }
-  h1 { font-size: 22px; } .sub { color: #64748B; font-size: 13px; margin-bottom: 32px; }
+  body { font-family: var(--font-sans); padding: 48px; background: var(--paper); color: var(--ink); }
+  h1 { font-family: var(--font-display); font-size: 28px; font-weight: 600; }
+  .sub { color: var(--muted); font-size: 14px; margin: 8px 0 32px; }
   .grid { display: flex; gap: 16px; flex-wrap: wrap; }
-  .card { width: 140px; border: 1px solid #E2E8F0; border-radius: 10px; padding: 20px; text-align: center; }
+  .card { width: 140px; border: 1px solid var(--line); background: var(--surface); padding: 20px; text-align: center; }
   .card svg { width: 32px; height: 32px; }
-  .blue { color: #2563EB; } .purple { color: #9333EA; }
-  .name { display: block; margin-top: 12px; font-size: 12px; color: #64748B; }
+  .blue { color: var(--blue); }
+  .violet { color: var(--violet); }
+  .name { display: block; margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
   .row2 { margin-top: 24px; display: flex; gap: 24px; align-items: center; }
 </style>
 </head>
 <body>
-<h1>Interview Drill — UI Icons</h1>
-<p class="sub">24px grid, outlined, stroke = currentColor (inherits any token color).</p>
+<h1>Interview Drill — UI icons</h1>
+<p class="sub">24px grid, outlined (start is filled), stroke = currentColor.</p>
 <div class="grid" id="g"></div>
 <div class="row2">
-  <span class="blue" id="b"></span><span class="purple" id="p"></span>
+  <span class="blue" id="b"></span><span class="violet" id="p"></span>
 </div>
 <script>
-const icons = ["quiz","code","upload","download","grade","sessions","logout","user"];
+const icons = ["quiz","code","upload","download","grade","sessions","logout","user","start","save","clock","check"];
 const g = document.getElementById("g");
 for (const n of icons) {
   fetch(n + ".svg").then(r => r.text()).then(t => {

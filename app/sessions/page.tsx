@@ -2,8 +2,10 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getSessionUser } from "@/lib/api";
 import Link from "next/link";
-import { SessionTypeBadge, StatusBadge } from "@/components/badges";
+import { DifficultyTicks, SessionTypeBadge, StatusBadge } from "@/components/badges";
 import LogoutButton from "@/components/logout-button";
+import { AppFrame, AppHeader } from "@/components/app-header";
+import { UserIcon } from "@/components/icons";
 
 const FILTERS = [
   { key: "all", label: "All" },
@@ -45,73 +47,75 @@ export default async function SessionsPage({
   });
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-border bg-card">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <div>
-            <h1 className="text-lg font-semibold text-foreground">Interview Drill</h1>
-            <p className="text-sm text-muted-foreground">{user.name}</p>
-          </div>
-          <LogoutButton />
-        </div>
-      </header>
+    <AppFrame>
+      <AppHeader
+        trailing={
+          <>
+            <span className="hidden items-center gap-1.5 font-mono text-xs text-muted-foreground sm:inline-flex">
+              <UserIcon className="h-3.5 w-3.5" />
+              {user.name}
+            </span>
+            <LogoutButton />
+          </>
+        }
+      />
 
-      <main className="mx-auto max-w-5xl px-6 py-8">
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Sessions</h2>
+      <main id="main" className="mx-auto max-w-5xl px-6 py-8 pl-8">
+        <div className="mb-6">
+          <h1 className="font-display text-2xl font-semibold tracking-tight">Sessions</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Scheduled quizzes and code challenges.</p>
         </div>
 
-        <div className="mb-6 flex flex-wrap gap-2">
-          {FILTERS.map((f) => (
-            <Link
-              key={f.key}
-              href={f.key === "all" ? "/sessions" : `/sessions?status=${f.key}`}
-              className={`rounded-full px-3 py-1 text-sm font-medium ${
-                activeFilter === f.key
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-card text-muted-foreground hover:bg-accent border border-border"
-              }`}
-            >
-              {f.label}
-            </Link>
-          ))}
-        </div>
+        <nav className="mb-0 flex flex-wrap gap-1 border-b border-border" aria-label="Filter by status">
+          {FILTERS.map((f) => {
+            const isActive = activeFilter === f.key;
+            return (
+              <Link
+                key={f.key}
+                href={f.key === "all" ? "/sessions" : `/sessions?status=${f.key}`}
+                className={`-mb-px border-b-2 px-3 py-2 text-sm font-medium ${
+                  isActive
+                    ? "border-primary text-foreground"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {f.label}
+              </Link>
+            );
+          })}
+        </nav>
 
         {sessions.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-input bg-card p-12 text-center">
-            <p className="text-muted-foreground">No sessions yet.</p>
+          <div className="border-x border-b border-border bg-card px-6 py-16 text-center">
+            <p className="text-foreground">No sessions yet.</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Run seed or create via API — see README.
+              Run the seed script or create one via the API. See the README.
             </p>
           </div>
         ) : (
-          <ul className="space-y-3">
+          <ul className="divide-y divide-border border-x border-b border-border bg-card">
             {sessions.map((s: { id: string; type: "quiz" | "code"; status: string; title: string; summary: string | null; difficulty: number; scheduledFor: Date | null; score: number | null }) => (
               <li key={s.id}>
                 <Link
                   href={`/sessions/${s.id}`}
-                  className="block rounded-lg border border-border bg-card p-4 transition hover:border-ring hover:shadow-sm"
+                  className="grid grid-cols-1 gap-3 px-4 py-4 transition-colors duration-150 hover:bg-accent sm:grid-cols-[1fr_auto] sm:items-center sm:gap-6"
                 >
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <SessionTypeBadge type={s.type} />
-                        <StatusBadge status={s.status} />
-                      </div>
-                      <h3 className="mt-2 truncate font-medium text-foreground">{s.title}</h3>
-                      {s.summary && (
-                        <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{s.summary}</p>
-                      )}
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <SessionTypeBadge type={s.type} />
+                      <StatusBadge status={s.status} />
                     </div>
-                    <div className="flex shrink-0 flex-col items-end gap-1 text-sm">
-                      {s.scheduledFor && (
-                        <span className="text-muted-foreground">Scheduled {formatDate(s.scheduledFor)}</span>
-                      )}
-                      <span className="text-muted-foreground">Difficulty {s.difficulty}/5</span>
-                      {s.score !== null && (
-                        <span className="font-semibold text-foreground">{s.score}/100</span>
-                      )}
-                    </div>
+                    <h2 className="mt-2 truncate font-medium text-foreground">{s.title}</h2>
+                    {s.summary && (
+                      <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{s.summary}</p>
+                    )}
+                  </div>
+                  <div className="flex shrink-0 items-center gap-5 text-sm sm:flex-col sm:items-end sm:gap-1.5">
+                    <DifficultyTicks value={s.difficulty} />
+                    <span className="font-mono text-xs text-muted-foreground">{formatDate(s.scheduledFor)}</span>
+                    {s.score !== null && (
+                      <span className="font-mono text-sm font-medium text-foreground">{s.score}/100</span>
+                    )}
                   </div>
                 </Link>
               </li>
@@ -119,6 +123,6 @@ export default async function SessionsPage({
           </ul>
         )}
       </main>
-    </div>
+    </AppFrame>
   );
 }

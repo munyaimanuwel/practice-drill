@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interview Drill — Envelope</title>
+<link rel="stylesheet" href="../_brand.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: var(--font-sans); background: var(--paper); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px; }
+  .env { width:1100px; height:560px; background: var(--surface); border:1px solid var(--line); position:relative; box-shadow:0 16px 40px rgba(12,27,51,.1); }
+  .env::before { content:""; position:absolute; left:0; top:0; bottom:0; width:10px; background: var(--grad); }
+  .return { position:absolute; top:48px; left:56px; }
+  .return p { font-family: var(--font-mono); font-size:14px; color: var(--muted); line-height:1.6; margin-top:12px; }
+  .addr { position:absolute; top:210px; left:380px; }
+  .addr h2 { font-family: var(--font-display); font-size:28px; font-weight:600; color: var(--ink); }
+  .addr p { font-size:18px; color:#243044; line-height:1.6; margin-top:10px; }
+  .stamp { position:absolute; top:36px; right:40px; width:92px; height:92px; }
+</style>
+</head>
+<body>
+<div class="env">
+  <div class="return">
+    <img src="../logo/interview-drill-lockup.svg" alt="Interview Drill" height="40">
+    <p>Manuwel Munyai<br>Interview Drill<br>Local-first practice desk</p>
+  </div>
+  <div class="addr">
+    <h2>Manuwel Munyai</h2>
+    <p>Session pack — week of 24 Aug 2026<br>Quiz 042 · Code challenge 018</p>
+  </div>
+  <img class="stamp" src="../logo/interview-drill-mark.svg" alt="">
+</div>
+</body>
+</html>

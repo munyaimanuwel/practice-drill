@@ -114,6 +114,10 @@ draft → ready → in_progress → submitted → grade_requested → graded
 - `storage/submissions/{sessionId}/{timestamp}_submission.zip`
 - `storage/` is gitignored. Downloads are served through the authenticated route, never as static files.
 
+## Design
+
+Brand kit lives in `design/` (logo, icons, CIP, banners, social, slides). Guidelines: `docs/brand-guidelines.md`. Live tokens: `app/tokens.css`. The app uses IBM Plex Sans / Syne / IBM Plex Mono via `next/font`.
+
 ## Docs
 
 | File | Contents |

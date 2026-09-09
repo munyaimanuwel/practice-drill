@@ -2,30 +2,28 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="../_brand.css">
 <style>
-  :root { --blue:#2563EB; --purple:#9333EA; }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body,html { width:1080px; height:1080px; overflow:hidden; font-family:'Segoe UI', system-ui, sans-serif; }
-  .post { width:1080px; height:1080px; background:linear-gradient(160deg,#0F172A,#1E1B4B 70%,#3B0764);
-    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
-    padding:90px; position:relative; }
-  .ring { position:absolute; border-radius:50%; border:2px solid rgba(255,255,255,.08); }
-  img.mark { width:260px; height:260px; border-radius:58px; box-shadow:0 30px 80px rgba(0,0,0,.5); z-index:2; }
-  h1 { color:#F8FAFC; font-size:84px; font-weight:800; letter-spacing:-0.02em; line-height:1.06; margin-top:56px; z-index:2; }
-  h1 span { background:linear-gradient(90deg,#93C5FD,#D8B4FE); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  p { color:#94A3B8; font-size:32px; line-height:1.55; margin-top:28px; max-width:760px; z-index:2; }
-  .chips { display:flex; gap:18px; margin-top:44px; z-index:2; }
-  .chip { color:#E2E8F0; font-size:24px; font-weight:600; padding:14px 30px; border:2px solid rgba(255,255,255,.22); border-radius:999px; }
+  body,html { width:1080px; height:1080px; overflow:hidden; font-family: var(--font-sans); }
+  .post { width:1080px; height:1080px; background: var(--ink); display:flex; flex-direction:column; justify-content:space-between; padding:90px; position:relative; }
+  .post::before { content:""; position:absolute; left:0; top:0; bottom:0; width:14px; background: var(--grad); }
+  img.mark { width:160px; height:160px; }
+  h1 { color: var(--white); font-family: var(--font-display); font-size:76px; font-weight:700; letter-spacing:-0.03em; line-height:1.06; }
+  h1 span { background: linear-gradient(90deg,#93C5FD,#D8B4FE); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  p { color:#94A3B8; font-size:28px; line-height:1.5; max-width:820px; }
+  .chips { display:flex; gap:14px; flex-wrap:wrap; }
+  .chip { color:#E2E8F0; font-family: var(--font-mono); font-size:18px; padding:10px 18px; border:1px solid rgba(255,255,255,.22); }
 </style>
 </head>
 <body>
 <div class="post">
-  <div class="ring" style="width:900px;height:900px;"></div>
-  <div class="ring" style="width:700px;height:700px;"></div>
   <img class="mark" src="../logo/interview-drill-mark.svg" alt="">
-  <h1>Drill the interview.<br><span>Before it drills you.</span></h1>
-  <p>Scheduled quiz and code-challenge sessions. Solve locally, submit a zip, request a grade.</p>
-  <div class="chips"><div class="chip">Quiz mode</div><div class="chip">Code challenges</div><div class="chip">Graded</div></div>
+  <div>
+    <h1>Drill the interview.<br><span>Before it drills you.</span></h1>
+    <p style="margin-top:28px">Scheduled quiz and code-challenge sessions. Solve locally, submit a zip, request a grade.</p>
+  </div>
+  <div class="chips"><div class="chip">Quiz</div><div class="chip">Code</div><div class="chip">Graded</div></div>
 </div>
 </body>
 </html>

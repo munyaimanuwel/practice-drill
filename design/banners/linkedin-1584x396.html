@@ -2,28 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="../_brand.css">
 <style>
-  :root { --blue:#2563EB; --purple:#9333EA; --slate-900:#0F172A; }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body,html { width:1584px; height:396px; overflow:hidden; font-family:'Segoe UI', system-ui, sans-serif; }
-  .banner { width:1584px; height:396px; background:linear-gradient(120deg,#0F172A 0%, #1E1B4B 55%, #3B0764 100%);
-    display:flex; align-items:center; justify-content:space-between; padding:0 110px; position:relative; overflow:hidden; }
-  .glow { position:absolute; border-radius:50%; filter:blur(90px); opacity:.5; }
-  .g1 { width:500px; height:500px; background:var(--blue); right:-100px; top:-200px; }
-  .g2 { width:420px; height:420px; background:var(--purple); left:34%; bottom:-240px; }
+  body,html { width:1584px; height:396px; overflow:hidden; font-family: var(--font-sans); }
+  .banner { width:1584px; height:396px; background: var(--ink);
+    display:flex; align-items:center; justify-content:space-between; padding:0 100px 0 110px; position:relative; overflow:hidden; }
+  .banner::before { content:""; position:absolute; left:0; top:0; bottom:0; width:12px; background: var(--grad); }
   .left { display:flex; align-items:center; gap:36px; z-index:2; }
-  .tagline { color:#F1F5F9; font-size:44px; font-weight:700; letter-spacing:-0.01em; line-height:1.2; }
-  .tagline span { background:linear-gradient(90deg,#93C5FD,#D8B4FE); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .sub { color:#94A3B8; font-size:22px; margin-top:10px; font-weight:400; }
-  img.mark { width:150px; height:150px; border-radius:34px; box-shadow:0 18px 50px rgba(0,0,0,.45); z-index:2; }
+  .tagline { font-family: var(--font-display); color: var(--white); font-size:42px; font-weight:700; letter-spacing:-0.02em; line-height:1.15; }
+  .tagline span { background: linear-gradient(90deg,#93C5FD,#D8B4FE); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sub { font-family: var(--font-mono); color:#94A3B8; font-size:18px; margin-top:12px; }
+  img.mark { width:140px; height:140px; }
 </style>
 </head>
 <body>
 <div class="banner">
-  <div class="glow g1"></div><div class="glow g2"></div>
   <div class="left">
     <img class="mark" src="../logo/interview-drill-mark.svg" alt="">
-    <div class="tagline">Interview Drill<br><span>Practice like it's the real thing.</span>
+    <div class="tagline">Interview Drill<br><span>Practice like it's the real room.</span>
       <div class="sub">Quizzes · Code challenges · Graded sessions</div>
     </div>
   </div>

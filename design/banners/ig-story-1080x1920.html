@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../_brand.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body,html { width:1080px; height:1920px; overflow:hidden; font-family: var(--font-sans); }
+  .story { width:1080px; height:1920px; background: var(--ink); color: var(--white); display:flex; flex-direction:column; justify-content:space-between; padding:120px 90px 140px; position:relative; }
+  .story::before { content:""; position:absolute; left:0; top:0; bottom:0; width:16px; background: var(--grad); }
+  img { width:180px; height:180px; }
+  h1 { font-family: var(--font-display); font-size:92px; font-weight:700; letter-spacing:-0.03em; line-height:1.05; }
+  h1 span { background: linear-gradient(90deg,#93C5FD,#D8B4FE); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  p { font-size:32px; color:#94A3B8; line-height:1.5; max-width:820px; }
+  .meta { font-family: var(--font-mono); font-size:22px; color:#CBD5E1; }
+</style>
+</head>
+<body>
+<div class="story">
+  <img src="../logo/interview-drill-mark.svg" alt="">
+  <div>
+    <h1>Practice like<br><span>it's the real room.</span></h1>
+    <p style="margin-top:36px">Tonight's drill is ready. Quiz in the browser, or download the starter and open it in your IDE.</p>
+  </div>
+  <div class="meta">Interview Drill · Manuwel Munyai</div>
+</div>
+</body>
+</html>

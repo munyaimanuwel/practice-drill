@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Interview Drill mark">
+  <defs>
+    <linearGradient id="id-gs" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="22" fill="none" stroke="url(#id-gs)" stroke-width="2.75"/>
+  <path d="M32 6v8M32 50v8M6 32h8M50 32h8" fill="none" stroke="url(#id-gs)" stroke-width="2.5"/>
+  <circle cx="32" cy="32" r="10" fill="none" stroke="url(#id-gs)" stroke-width="2.25"/>
+  <path d="M32 26.5 37.5 32 32 37.5 26.5 32Z" fill="url(#id-gs)"/>
+</svg>

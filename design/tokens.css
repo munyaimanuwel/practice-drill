@@ -14,18 +14,18 @@
     /* ------------------------------------------------------------- */
     /* 1. Primitives                                                 */
     /* ------------------------------------------------------------- */
-    /* Neutral (slate) */
-    --slate-50: 210 40% 98%;
-    --slate-100: 210 40% 96%;
-    --slate-200: 214 32% 91%;
-    --slate-300: 213 27% 84%;
-    --slate-400: 215 20% 65%;
-    --slate-500: 215 16% 47%;
-    --slate-700: 215 25% 27%;
-    --slate-800: 217 33% 18%;
-    --slate-900: 222 47% 11%;
+    /* Neutral (cool navy paper, not generic slate) */
+    --slate-50: 210 50% 98%;
+    --slate-100: 214 44% 94%;
+    --slate-200: 214 32% 88%;
+    --slate-300: 214 24% 78%;
+    --slate-400: 215 16% 58%;
+    --slate-500: 218 14% 42%;
+    --slate-700: 218 28% 24%;
+    --slate-800: 218 42% 16%;
+    --slate-900: 218 62% 12%;
 
-    /* Brand accent (blue) */
+    /* Brand accent (drill blue) */
     --blue-100: 214 95% 93%;
     --blue-300: 212 96% 78%;
     --blue-500: 217 91% 60%;
@@ -33,11 +33,11 @@
     --blue-700: 224 76% 48%;
     --blue-800: 227 69% 40%;
 
-    /* Secondary accent (purple) */
-    --purple-100: 269 100% 96%;
-    --purple-600: 272 81% 56%;
-    --purple-700: 272 72% 47%;
-    --purple-800: 273 67% 39%;
+    /* Secondary accent (signal violet) */
+    --purple-100: 263 100% 96%;
+    --purple-600: 263 70% 50%;
+    --purple-700: 263 68% 42%;
+    --purple-800: 263 64% 34%;
 
     /* Status (green / amber / red) */
     --green-100: 141 84% 93%;
@@ -114,8 +114,8 @@
     --input: var(--slate-300);
     --ring: var(--blue-500);
 
-    /* Shape */
-    --radius: 0.5rem;
+    /* Shape — slightly sharper than default SaaS rounding */
+    --radius: 0.375rem;
 
     /* ------------------------------------------------------------- */
     /* 3. Component                                                  */
@@ -123,7 +123,8 @@
     --button-radius: calc(var(--radius) - 2px);
     --input-radius: calc(var(--radius) - 2px);
     --card-radius: var(--radius);
-    --badge-radius: 9999px;
+    --badge-radius: 0.25rem;
+    --spine-width: 0.375rem;
   }
 
   /*

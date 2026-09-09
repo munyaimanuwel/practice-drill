@@ -1,4 +1,6 @@
 node_modules/
+.tmp-verify/
+*.tsbuildinfo
 .next/
 out/
 dist/

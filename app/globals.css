@@ -5,7 +5,56 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply font-sans;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary-hover;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary-hover;
+  }
+
+  .btn-quiet {
+    @apply border border-input bg-card text-foreground hover:bg-accent;
+  }
+
+  .btn-ink {
+    @apply bg-foreground text-background hover:bg-foreground/85;
+  }
+
+  .field {
+    @apply mt-1 w-full rounded-md border border-input bg-card px-3 py-2 text-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring;
+  }
+
+  .drill-spine {
+    background: linear-gradient(180deg, hsl(var(--primary)), hsl(var(--secondary)));
   }
 }
