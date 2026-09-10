@@ -14,7 +14,7 @@
     /* ------------------------------------------------------------- */
     /* 1. Primitives                                                 */
     /* ------------------------------------------------------------- */
-    /* Neutral (cool navy paper, not generic slate) */
+    /* Neutral */
     --slate-50: 210 50% 98%;
     --slate-100: 214 44% 94%;
     --slate-200: 214 32% 88%;
@@ -25,7 +25,7 @@
     --slate-800: 218 42% 16%;
     --slate-900: 218 62% 12%;
 
-    /* Brand accent (drill blue) */
+    /* Brand accent */
     --blue-100: 214 95% 93%;
     --blue-300: 212 96% 78%;
     --blue-500: 217 91% 60%;
@@ -33,7 +33,7 @@
     --blue-700: 224 76% 48%;
     --blue-800: 227 69% 40%;
 
-    /* Secondary accent (signal violet) */
+    /* Secondary accent */
     --purple-100: 263 100% 96%;
     --purple-600: 263 70% 50%;
     --purple-700: 263 68% 42%;
@@ -114,7 +114,7 @@
     --input: var(--slate-300);
     --ring: var(--blue-500);
 
-    /* Shape — slightly sharper than default SaaS rounding */
+    /* Shape */
     --radius: 0.375rem;
 
     /* ------------------------------------------------------------- */
@@ -124,23 +124,4 @@
     --input-radius: calc(var(--radius) - 2px);
     --card-radius: var(--radius);
     --badge-radius: 0.25rem;
-    --spine-width: 0.375rem;
-  }
-
-  /*
-   * Dark theme scaffold — semantic layer makes this a pure variable swap.
-   * Unused until a toggle ships; add .dark to <html> to activate.
-   */
-  .dark {
-    --background: var(--slate-900);
-    --foreground: var(--slate-100);
-    --card: 222 47% 8%;
-    --card-foreground: var(--slate-100);
-
-    --muted: var(--slate-800);
-    --muted-foreground: var(--slate-400);
-    --accent: var(--slate-800);
-
-    --border: var(--slate-800);
-    --input: var(--slate-700);
-  }
+}

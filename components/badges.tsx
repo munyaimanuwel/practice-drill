@@ -4,12 +4,12 @@ export function SessionTypeBadge({ type }: { type: "quiz" | "code" }) {
   const base = "inline-flex items-center gap-1 rounded-sm px-2 py-0.5 text-xs font-medium";
   return type === "quiz" ? (
     <span className={`${base} bg-info-soft text-info-soft-foreground`}>
-      <QuizIcon className="h-3.5 w-3.5" title="" />
+      <QuizIcon className="h-3.5 w-3.5" />
       Quiz
     </span>
   ) : (
     <span className={`${base} bg-success-soft text-success-soft-foreground`}>
-      <CodeIcon className="h-3.5 w-3.5" title="" />
+      <CodeIcon className="h-3.5 w-3.5" />
       Code
     </span>
   );
@@ -39,13 +39,12 @@ export function StatusBadge({ status }: { status: string }) {
 }
 
 export function DifficultyTicks({ value }: { value: number }) {
-  const n = Math.min(5, Math.max(0, value));
   return (
-    <span className="inline-flex items-end gap-0.5" aria-label={`Difficulty ${n} of 5`}>
+    <span className="inline-flex items-end gap-0.5" aria-label={`Difficulty ${value} of 5`}>
       {Array.from({ length: 5 }, (_, i) => (
         <span
           key={i}
-          className={`w-1 rounded-sm ${i < n ? "bg-primary" : "bg-muted"}`}
+          className={`w-1 rounded-sm ${i < value ? "bg-primary" : "bg-muted"}`}
           style={{ height: `${8 + i * 2}px` }}
         />
       ))}

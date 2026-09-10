@@ -1,26 +1,10 @@
 import { useId } from "react";
 
-export function BrandMark({
-  className,
-  title = "Interview Drill",
-  decorative = false,
-}: {
-  className?: string;
-  title?: string;
-  decorative?: boolean;
-}) {
-  const uid = useId().replace(/:/g, "");
-  const gid = `${uid}-g`;
-  const hidden = decorative || !title;
+export function BrandMark({ className }: { className?: string }) {
+  const gid = `${useId().replace(/:/g, "")}-g`;
 
   return (
-    <svg
-      className={className}
-      viewBox="0 0 64 64"
-      role={hidden ? undefined : "img"}
-      aria-hidden={hidden ? true : undefined}
-      aria-label={hidden ? undefined : title}
-    >
+    <svg className={className} viewBox="0 0 64 64" aria-hidden>
       <defs>
         <linearGradient id={gid} x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#2563EB" />
@@ -38,15 +22,13 @@ export function BrandMark({
 
 export function BrandLockup({
   dark = false,
-  className,
   markClassName = "h-8 w-8",
 }: {
   dark?: boolean;
-  className?: string;
   markClassName?: string;
 }) {
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className ?? ""}`}>
+    <span className="inline-flex items-center gap-2.5">
       <BrandMark className={markClassName} />
       <span
         className={`font-display text-lg font-semibold tracking-tight ${

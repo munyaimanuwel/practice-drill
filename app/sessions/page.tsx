@@ -60,29 +60,26 @@ export default async function SessionsPage({
         }
       />
 
-      <main id="main" className="mx-auto max-w-5xl px-6 py-8 pl-8">
+      <main className="mx-auto max-w-5xl px-6 py-8 pl-8">
         <div className="mb-6">
           <h1 className="font-display text-2xl font-semibold tracking-tight">Sessions</h1>
           <p className="mt-1 text-sm text-muted-foreground">Scheduled quizzes and code challenges.</p>
         </div>
 
-        <nav className="mb-0 flex flex-wrap gap-1 border-b border-border" aria-label="Filter by status">
-          {FILTERS.map((f) => {
-            const isActive = activeFilter === f.key;
-            return (
-              <Link
-                key={f.key}
-                href={f.key === "all" ? "/sessions" : `/sessions?status=${f.key}`}
-                className={`-mb-px border-b-2 px-3 py-2 text-sm font-medium ${
-                  isActive
-                    ? "border-primary text-foreground"
-                    : "border-transparent text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {f.label}
-              </Link>
-            );
-          })}
+        <nav className="flex flex-wrap gap-1 border-b border-border">
+          {FILTERS.map((f) => (
+            <Link
+              key={f.key}
+              href={f.key === "all" ? "/sessions" : `/sessions?status=${f.key}`}
+              className={`-mb-px border-b-2 px-3 py-2 text-sm font-medium ${
+                activeFilter === f.key
+                  ? "border-primary text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {f.label}
+            </Link>
+          ))}
         </nav>
 
         {sessions.length === 0 ? (
@@ -94,7 +91,7 @@ export default async function SessionsPage({
           </div>
         ) : (
           <ul className="divide-y divide-border border-x border-b border-border bg-card">
-            {sessions.map((s: { id: string; type: "quiz" | "code"; status: string; title: string; summary: string | null; difficulty: number; scheduledFor: Date | null; score: number | null }) => (
+            {sessions.map((s) => (
               <li key={s.id}>
                 <Link
                   href={`/sessions/${s.id}`}

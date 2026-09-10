@@ -6,7 +6,6 @@ import type { Config } from "tailwindcss";
  * work, e.g. bg-primary/50.
  */
 const config: Config = {
-  darkMode: ["class"],
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",

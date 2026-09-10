@@ -133,7 +133,7 @@ export default function QuizForm({ session, questions, initialAnswers }: Props) 
             {questions.map((q, idx) => (
               <li key={q.id} className="border border-border bg-card">
                 <div className="flex items-start gap-4 p-5">
-                  <span className="font-mono text-sm text-muted-foreground" aria-hidden>
+                  <span className="font-mono text-sm text-muted-foreground">
                     {String(idx + 1).padStart(2, "0")}
                   </span>
                   <div className="min-w-0 flex-1">

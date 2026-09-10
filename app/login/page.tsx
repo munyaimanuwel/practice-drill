@@ -18,7 +18,7 @@ export default function LoginPage() {
           </p>
         </div>
         <p className="font-mono text-xs text-background/45">Manuwel Munyai</p>
-        <BrandMark className="pointer-events-none absolute -bottom-8 -right-8 h-56 w-56 opacity-15" decorative />
+        <BrandMark className="pointer-events-none absolute -bottom-8 -right-8 h-56 w-56 opacity-15" />
       </aside>
 
       <section className="relative flex items-center justify-center px-6 py-16">
