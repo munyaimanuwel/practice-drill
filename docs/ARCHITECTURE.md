@@ -54,8 +54,8 @@ storage/
 - `pnpm dev` → Next on :3000  
 
 ## Future (not P0)
-- Dokploy + Traefik + Tailscale  
-- Hermes cron POST sessions  
+- Dokploy + Traefik  
+- Scheduler POSTs sessions with the service token  
 - Grade webhook  
 
 ## Threat model (minimal)

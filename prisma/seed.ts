@@ -35,9 +35,9 @@ const CODE_SESSION_ID = "22222222-2222-4222-8222-222222222222";
 async function main() {
   await ensureStorageDirs();
 
-  const email = (process.env.SEED_USER_EMAIL ?? "manuwel@local.dev").toLowerCase();
+  const email = (process.env.SEED_USER_EMAIL ?? "admin@localhost").toLowerCase();
   const password = process.env.SEED_USER_PASSWORD ?? "change-me-now";
-  const name = process.env.SEED_USER_NAME ?? "Manuwel";
+  const name = process.env.SEED_USER_NAME ?? "Admin";
 
   const user = await prisma.user.upsert({
     where: { email },
@@ -50,7 +50,7 @@ async function main() {
     },
   });
 
-  // Quiz session — C# + Docker mix, 5 questions.
+  // Demo quiz — original generic C# / Docker prompts (not from any employer).
   const quiz = await prisma.drillSession.upsert({
     where: { id: QUIZ_SESSION_ID },
     update: {},
@@ -126,7 +126,7 @@ async function main() {
       type: SessionType.code,
       status: SessionStatus.ready,
       title: "Code — String Calculator (C#)",
-      summary: "TDD kata: implement a StringCalculator with newline separators and negative-number rejection.",
+      summary: "Public TDD kata (String Calculator): implement Add() with newline separators and negative-number rejection.",
       topicTags: ["csharp", "tdd"],
       difficulty: 2,
       timeLimitMinutes: 60,

@@ -77,7 +77,7 @@ Add `docs/DEPLOY.md` with:
 - Env vars required in prod
 - Volume mount for `./storage`
 - `prisma migrate deploy` on release
-- Recommend Tailscale-only or Traefik basic auth
+- Recommend private-network access or Traefik basic auth
 - Do not expose Postgres publicly
 
 Optional but preferred: working `Dockerfile` + `.dockerignore`.

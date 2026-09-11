@@ -1,6 +1,6 @@
 # Practice Drill — Brand & Design Assets
 
-Identity kit for the personal interview practice app. Production marks are SVG. Tokens live in `app/tokens.css` (copied here as `tokens.css`). Shared CSS variables and fonts: `_brand.css`.
+Identity kit for the personal practice app. Production marks are SVG. Tokens live in `app/tokens.css` (copied here as `tokens.css`). Shared CSS variables and fonts: `_brand.css`.
 
 Guidelines: [`docs/brand-guidelines.md`](../docs/brand-guidelines.md).
 

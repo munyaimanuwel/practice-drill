@@ -9,7 +9,7 @@ Service: `Authorization: Bearer $SESSION_CREATE_TOKEN` for create-only routes (o
 
 ### POST /api/auth/login
 ```json
-{ "email": "manuwel@local.dev", "password": "..." }
+{ "email": "admin@localhost", "password": "..." }
 ```
 → Set session cookie; `{ "user": { "id", "email", "name" } }`
 

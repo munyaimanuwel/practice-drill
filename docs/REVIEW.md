@@ -28,7 +28,7 @@ Grok covered the BUILD_PLAN spine well.
 
 ## Blockers (must fix)
 
-### 1. Middleware blocks service-token / Hermes API
+### 1. Middleware blocks service-token API
 **File:** `middleware.ts`
 
 All `/api/*` except login/logout require a browser session cookie **before** route handlers run.  
@@ -59,13 +59,13 @@ Allowed transitions include `grade_requested → graded` for **any session owner
 ## Medium issues (should fix before deploy)
 
 ### 4. Service-token create assigns wrong user if multi-user later
-`POST /api/sessions` with token uses `user?.id ?? (await prisma.user.findFirst())!.id` — OK for single-user P0; document or require `userId` in body for Hermes.
+`POST /api/sessions` with token uses `user?.id ?? (await prisma.user.findFirst())!.id` — OK for single-user P0; document or require `userId` in body for a scheduler.
 
 ### 5. Optional `/sessions/new` UI missing
 Spec listed as optional Task 9 — not present. Seed + API are enough for P0; optional for UX.
 
 ### 6. Deploy artifacts missing
-No `Dockerfile`, no Dokploy compose, no production notes (Tailscale-only, `NODE_ENV`, volume for `storage/`). Fine for local P0; **block production** until added (can be a follow-up doc task).
+No `Dockerfile`, no Dokploy compose, no production notes (`NODE_ENV`, volume for `storage/`). Fine for local P0; **block production** until added (can be a follow-up doc task).
 
 ### 7. Filter tabs omit `grade_requested` / `draft`
 Sessions list filters: All / Ready / In progress / Submitted / Graded — missing **grade_requested** (and draft). Easy UI fix.
@@ -86,7 +86,7 @@ Dev fallback secret exists if env is default — OK for local; **production must
 
 - [ ] Do not commit `.env` (gitignored — good)  
 - [ ] Rotate seed password from `change-me-now`  
-- [ ] Put app behind Tailscale or auth at Traefik  
+- [ ] Put app behind a private network or auth at Traefik  
 - [ ] Persist `storage/` volume  
 - [ ] `SIGNUPS` N/A (no registration) — good  
 

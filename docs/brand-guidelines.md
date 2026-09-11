@@ -1,6 +1,6 @@
 # Brand Guidelines v1.1
 
-Practice Drill — personal interview practice for Manuwel Munyai.
+Practice Drill — personal practice app for quizzes and coding challenges.
 
 ## Quick Reference
 
@@ -118,7 +118,7 @@ Minimum clear space = width of the inner diamond. Do not crowd the ticks.
 ### Brand personality
 
 **Direct:** Say the action. Sign in, submit, request grade.  
-**Calm:** Interview prep is already stressful; the UI is not.  
+**Calm:** Practice is already demanding; the UI is not.  
 **Specific:** Name the artifact (starter zip, solution folder), not the platform.
 
 ### Voice chart
@@ -142,7 +142,7 @@ Minimum clear space = width of the inner diamond. Do not crowd the ticks.
 
 - Emoji as icons
 - Motivational coaching copy
-- "Ninja", "rockstar", "crush the interview"
+- "Ninja", "rockstar", "crush it"
 - ALL-CAPS eyebrows on UI chrome
 
 ## 5. Imagery & UI

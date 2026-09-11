@@ -1,21 +1,20 @@
 # AGENTS.md — Practice Drill (P0)
 **For:** Grok Build / coding agents implementing this repo  
-**Owner:** Manuwel Munyai  
-**Product:** Personal interview practice app (quiz + coding challenges)  
+**Product:** Personal practice app (quiz + coding challenges)  
 **Codename folder:** `practice-drill`
 
 ---
 
 ## Mission
 
-Build a **single-user** web app where Manuwel can:
+Build a **single-user** web app where the owner can:
 
 1. Log in  
 2. See scheduled / available **drill sessions**  
 3. **Quiz:** answer in the browser → submit → request grade  
 4. **Code challenge:** download starter pack → solve in local IDE (Cursor/VS on Windows) → upload zip → request grade  
 
-**Out of scope for P0:** multi-tenant SaaS, public signup, running untrusted code in a sandbox, LeetCode clone features, mobile apps, Telegram delivery.
+**Out of scope for P0:** multi-tenant SaaS, public signup, running untrusted code in a sandbox, public leaderboards, mobile apps, chat delivery.
 
 ---
 
@@ -26,7 +25,7 @@ Build a **single-user** web app where Manuwel can:
 3. **Security** — never commit secrets; env via `.env.example`; file uploads size-capped and type-checked (zip only for submissions).  
 4. **No remote code execution** of user uploads in P0 — store files only; grading is manual or external agent later.  
 5. **Windows IDE friendly** — code tasks must produce a **downloadable starter zip** with clear README.  
-6. **Generator-friendly data model** — sessions can be created via API (for Hermes cron later) or admin seed script.  
+6. **Generator-friendly data model** — sessions can be created via API (scheduler later) or admin seed script.  
 7. **Do not invent features** beyond docs in `/docs`. Prefer incomplete + correct over clever.
 
 ---
@@ -105,7 +104,7 @@ practice-drill/
 
 ### When unsure
 - Prefer the simpler option  
-- Match existing PingYard/ops style: explicit, boring, typed  
+- Prefer explicit, boring, typed code  
 - Leave a `// TODO(P1):` comment rather than scope creep  
 
 ---
@@ -127,13 +126,12 @@ See `docs/ACCEPTANCE.md`. Short version:
 
 ## Integration note (later, not P0 build blocker)
 
-Hermes cron on VPS will eventually `POST /api/sessions` with a service token. For P0, a **seed script** or authenticated API with `SESSION_CREATE_TOKEN` is enough.
+A scheduler can later `POST /api/sessions` with a service token. For P0, a **seed script** or authenticated API with `SESSION_CREATE_TOKEN` is enough.
 
 ---
 
 ## Owner preferences
 
-- Name on apps: Manuwel  
 - Stack comfort: C#, .NET, Docker, Azure DevOps, Postgres — quizzes/tasks will often target these  
 - Deploy target later: Dokploy on VPS; for P0 **local Docker + Next dev** is enough  
 

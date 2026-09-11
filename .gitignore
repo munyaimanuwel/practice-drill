@@ -5,7 +5,8 @@ node_modules/
 out/
 dist/
 .env
-.env.local
+.env.*
+!.env.example
 storage/
 *.zip
 !fixtures/**/*.zip
@@ -14,5 +15,12 @@ Thumbs.db
 *.log
 .idea/
 .vscode/
+.cursor/
 .commandcode/
 coverage/
+*.pem
+*.p12
+*.pfx
+credentials.json
+serviceAccount*.json
+firebase-adminsdk*.json

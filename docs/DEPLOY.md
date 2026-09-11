@@ -8,7 +8,7 @@ production `Dockerfile`; Dokploy builds it and runs the container.
 ## Architecture on the VPS
 
 ```
-Internet / Tailscale
+Internet
         │
    [Traefik (Dokploy)]  →  https://drill.yourdomain
         │
@@ -60,7 +60,7 @@ In Dokploy: **Services → New → Application (Dockerfile)**.
 
 | Setting | Value |
 |---------|-------|
-| Source | Git repository `https://github.com/munyaimanuwel/practice-drill.git` |
+| Source | This Git repository (Dockerfile at repo root) |
 | Branch | `master` |
 | Build type | `Dockerfile` (repo root) |
 | Port | `3000` |
@@ -71,9 +71,9 @@ In Dokploy: **Services → New → Application (Dockerfile)**.
 DATABASE_URL=postgresql://drill:<postgres-password>@practice-drill-postgres:5432/practice_drill?schema=public
 AUTH_SECRET=<openssl rand -hex 32>
 SESSION_CREATE_TOKEN=<openssl rand -hex 32>
-SEED_USER_EMAIL=manuwel@local.dev
+SEED_USER_EMAIL=admin@localhost
 SEED_USER_PASSWORD=<strong password>
-SEED_USER_NAME=Manuwel
+SEED_USER_NAME=Admin
 NODE_ENV=production
 MAX_UPLOAD_BYTES=20971520
 ```
@@ -153,7 +153,7 @@ To add a new migration later:
 - [ ] `AUTH_SECRET`, `SESSION_CREATE_TOKEN`, DB password, seed password are all strong random values (not `change-me-*`)
 - [ ] Postgres is not exposed publicly (no published port)
 - [ ] App is behind TLS (Dokploy/Traefik)
-- [ ] Optional: restrict the Dokploy dashboard + app to Tailscale
+- [ ] Optional: restrict the Dokploy dashboard + app to a private network or reverse-proxy auth
 - [ ] `storage/` is a mounted volume, not baked into the image
 - [ ] Rotate the seed password after first login (or change `.env` and redeploy)
 

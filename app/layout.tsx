@@ -25,7 +25,7 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: "Practice Drill",
-  description: "Personal interview practice: quizzes and coding challenges.",
+  description: "Personal practice app: quizzes and coding challenges.",
 };
 
 export default function RootLayout({
