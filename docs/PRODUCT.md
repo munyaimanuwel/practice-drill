@@ -1,4 +1,4 @@
-# PRODUCT.md — Interview Drill P0
+# PRODUCT.md — Practice Drill P0
 
 ## Problem
 Interview prep is split across Telegram noise, markdown files, and local IDEs. Manuwel needs one place to:

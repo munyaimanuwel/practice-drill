@@ -1,4 +1,4 @@
-# Interview Drill — Brand & Design Assets
+# Practice Drill — Brand & Design Assets
 
 Identity kit for the personal interview practice app. Production marks are SVG. Tokens live in `app/tokens.css` (copied here as `tokens.css`). Shared CSS variables and fonts: `_brand.css`.
 
@@ -16,11 +16,11 @@ Guidelines: [`docs/brand-guidelines.md`](../docs/brand-guidelines.md).
 
 ## Logo (`logo/`)
 
-- `interview-drill-mark.svg` — **primary tile**: range target (ring, crosshair, diamond)
-- `interview-drill-mark-standalone.svg` — transparent ring mark
-- `interview-drill-mark-mono.svg` — `currentColor`
-- `interview-drill-mark-alt.svg` — code prompt accent
-- `interview-drill-lockup.svg` / `-dark.svg` — horizontal lockups
+- `practice-drill-mark.svg` — **primary tile**: range target (ring, crosshair, diamond)
+- `practice-drill-mark-standalone.svg` — transparent ring mark
+- `practice-drill-mark-mono.svg` — `currentColor`
+- `practice-drill-mark-alt.svg` — code prompt accent
+- `practice-drill-lockup.svg` / `-dark.svg` — horizontal lockups
 - `preview.html` — size gallery
 - `archive/` — v1 bullseye-check
 - `explorations/` — raster AI studies (SVG is source of truth)

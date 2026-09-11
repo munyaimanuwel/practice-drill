@@ -18,7 +18,7 @@ Desktop-first. Clean, dense, readable. Dark or light OK — pick one and stay co
 - Redirect to `/sessions`
 
 ## /sessions
-**Header:** app name “Interview Drill”, user name, Logout  
+**Header:** app name “Practice Drill”, user name, Logout  
 
 **List:**
 - Filters: All | Ready | In progress | Submitted | Graded (simple tabs or select)

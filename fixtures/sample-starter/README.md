@@ -20,7 +20,7 @@ dotnet test
 dotnet run
 ```
 
-Open this folder in Cursor or VS Code, or `interview-drill.sln` in Visual Studio.
+Open this folder in Cursor or VS Code, or `practice-drill.sln` in Visual Studio.
 
 ## Submission
 

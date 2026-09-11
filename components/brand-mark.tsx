@@ -35,7 +35,7 @@ export function BrandLockup({
           dark ? "text-background" : "text-foreground"
         }`}
       >
-        Interview Drill
+        Practice Drill
       </span>
     </span>
   );

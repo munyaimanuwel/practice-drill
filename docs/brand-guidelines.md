@@ -1,6 +1,6 @@
 # Brand Guidelines v1.1
 
-Interview Drill — personal interview practice for Manuwel Munyai.
+Practice Drill — personal interview practice for Manuwel Munyai.
 
 ## Quick Reference
 
@@ -84,12 +84,12 @@ The mark is a **range target**: outer ring, four crosshair ticks, inner ring, di
 
 | File | Use |
 |------|-----|
-| `interview-drill-mark.svg` | App icon, favicon, CIP reverse |
-| `interview-drill-mark-standalone.svg` | Transparent ring mark on photos |
-| `interview-drill-mark-mono.svg` | Single-color (currentColor) |
-| `interview-drill-mark-alt.svg` | Code-session accent (prompt + chevron) |
-| `interview-drill-lockup.svg` | Horizontal lockup on light |
-| `interview-drill-lockup-dark.svg` | Horizontal lockup on ink |
+| `practice-drill-mark.svg` | App icon, favicon, CIP reverse |
+| `practice-drill-mark-standalone.svg` | Transparent ring mark on photos |
+| `practice-drill-mark-mono.svg` | Single-color (currentColor) |
+| `practice-drill-mark-alt.svg` | Code-session accent (prompt + chevron) |
+| `practice-drill-lockup.svg` | Horizontal lockup on light |
+| `practice-drill-lockup-dark.svg` | Horizontal lockup on ink |
 
 In the app, render `BrandMark` / `BrandLockup` (`components/brand-mark.tsx`) so the wordmark uses Syne. Do not use the SVG lockup text as the live UI wordmark.
 

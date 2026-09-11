@@ -1,8 +1,8 @@
-# AGENTS.md — Interview Drill (P0)
+# AGENTS.md — Practice Drill (P0)
 **For:** Grok Build / coding agents implementing this repo  
 **Owner:** Manuwel Munyai  
 **Product:** Personal interview practice app (quiz + coding challenges)  
-**Codename folder:** `interview-drill`
+**Codename folder:** `practice-drill`
 
 ---
 
@@ -65,7 +65,7 @@ Then implement per `docs/BUILD_PLAN.md`.
 ## Repo layout (target after build)
 
 ```
-interview-drill/
+practice-drill/
   AGENTS.md                 ← this file
   README.md
   docs/

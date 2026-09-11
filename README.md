@@ -1,4 +1,4 @@
-# Interview Drill
+# Practice Drill
 
 Personal interview practice app (P0): in-browser quizzes + downloadable coding challenges for local IDE work.
 

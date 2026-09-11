@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_USER: drill
       POSTGRES_PASSWORD: drill
-      POSTGRES_DB: interview_drill
+      POSTGRES_DB: practice_drill
     ports:
       - "5432:5432"
     volumes:

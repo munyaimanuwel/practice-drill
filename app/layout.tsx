@@ -24,7 +24,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Interview Drill",
+  title: "Practice Drill",
   description: "Personal interview practice: quizzes and coding challenges.",
 };
 

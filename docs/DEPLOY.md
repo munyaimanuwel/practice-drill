@@ -1,4 +1,4 @@
-# DEPLOY.md — Interview Drill on Dokploy (VPS)
+# DEPLOY.md — Practice Drill on Dokploy (VPS)
 
 Deploy the Next.js app + Postgres on a VPS using **Dokploy**. The repo ships a
 production `Dockerfile`; Dokploy builds it and runs the container.
@@ -12,7 +12,7 @@ Internet / Tailscale
         │
    [Traefik (Dokploy)]  →  https://drill.yourdomain
         │
-   [interview-drill app]   container:3000
+   [practice-drill app]   container:3000
         │                        │
         │                        └── volume: /app/storage  (uploads, persists)
         │
@@ -42,15 +42,15 @@ In Dokploy: **Services → New → Postgres**.
 | Image | `postgres:16-alpine` |
 | User | `drill` |
 | Password | strong random (store it) |
-| Database | `interview_drill` |
+| Database | `practice_drill` |
 | Volume | `postgres-data:/var/lib/postgresql/data` |
 | Ports | **do not publish** (internal network only) |
 
-Note the service name (e.g. `interview-drill-postgres`) — it becomes the hostname
+Note the service name (e.g. `practice-drill-postgres`) — it becomes the hostname
 the app uses for `DATABASE_URL`.
 
 > If you already run Postgres 16 on the VPS, you can skip this and just create
-> the `drill` role + `interview_drill` database with `psql`.
+> the `drill` role + `practice_drill` database with `psql`.
 
 ---
 
@@ -60,7 +60,7 @@ In Dokploy: **Services → New → Application (Dockerfile)**.
 
 | Setting | Value |
 |---------|-------|
-| Source | Git repository `https://github.com/munyaimanuwel/interview-drill.git` |
+| Source | Git repository `https://github.com/munyaimanuwel/practice-drill.git` |
 | Branch | `master` |
 | Build type | `Dockerfile` (repo root) |
 | Port | `3000` |
@@ -68,7 +68,7 @@ In Dokploy: **Services → New → Application (Dockerfile)**.
 ### Env vars (Dokploy → Application → Environment)
 
 ```env
-DATABASE_URL=postgresql://drill:<postgres-password>@interview-drill-postgres:5432/interview_drill?schema=public
+DATABASE_URL=postgresql://drill:<postgres-password>@practice-drill-postgres:5432/practice_drill?schema=public
 AUTH_SECRET=<openssl rand -hex 32>
 SESSION_CREATE_TOKEN=<openssl rand -hex 32>
 SEED_USER_EMAIL=manuwel@local.dev
@@ -86,7 +86,7 @@ openssl rand -hex 32
 ### Volume (persistent storage for uploads)
 
 Dokploy → Application → **Volumes**: mount a volume at **`/app/storage`**
-(e.g. `interview-drill-storage:/app/storage`).
+(e.g. `practice-drill-storage:/app/storage`).
 
 > Without this, uploaded starter/submission zips are lost on redeploy.
 

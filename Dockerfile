@@ -1,4 +1,4 @@
-# Interview Drill — production image (single stage, Dokploy-compatible)
+# Practice Drill — production image (single stage, Dokploy-compatible)
 # Keeps full node_modules + Prisma CLI so `prisma migrate deploy` and the seed
 # can run at container start (Dokploy builds the image; we run migrations at boot).
 

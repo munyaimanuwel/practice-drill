@@ -1,6 +1,6 @@
-# P0 Code Review — Interview Drill
+# P0 Code Review — Practice Drill
 **Date:** 2026-08-02  
-**Reviewer:** J.A.R.V.I.S. (read-only audit of Grok Build on `D:\Projects\Github\interview-drill`)  
+**Reviewer:** J.A.R.V.I.S. (read-only audit of Grok Build on `D:\Projects\Github\practice-drill`)  
 **Verdict:** **Mostly good for P0 — fix blockers below before production deploy.**
 
 ---
