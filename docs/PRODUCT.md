@@ -28,7 +28,7 @@ Practice is split across chat threads, markdown files, and local IDEs. This app 
 
 ### Session generation (out of band)
 - P0: seed script or API creates sessions
-- Later: a scheduler POSTs sessions with the service token
+- Later: Hermes (or any scheduler) POSTs sessions with the service token; an AI worker can poll `grade_requested` and POST grades as admin (see README §7)
 
 ## Session types
 | type | UI | Artifacts |

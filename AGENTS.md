@@ -126,7 +126,7 @@ See `docs/ACCEPTANCE.md`. Short version:
 
 ## Integration note (later, not P0 build blocker)
 
-A scheduler can later `POST /api/sessions` with a service token. For P0, a **seed script** or authenticated API with `SESSION_CREATE_TOKEN` is enough.
+Hermes (or any scheduler) can later `POST /api/sessions` with `SESSION_CREATE_TOKEN`, and an AI worker can grade via admin login + `POST /api/sessions/:id/grade`. For P0, a **seed script** or that HTTP API is enough — see README §7.
 
 ---
 

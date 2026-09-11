@@ -3,7 +3,7 @@
 Base: same origin. JSON unless multipart.
 
 Auth: session cookie for browser.  
-Service: `Authorization: Bearer $SESSION_CREATE_TOKEN` for create-only routes (optional if admin session used).
+Service: `Authorization: Bearer $SESSION_CREATE_TOKEN` for **create + starter upload only**. Listing, reading a session, and grading need an admin session cookie (see README §7 for Hermes/AI).
 
 ## Auth
 

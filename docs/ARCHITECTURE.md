@@ -55,8 +55,9 @@ storage/
 
 ## Future (not P0)
 - Dokploy + Traefik  
-- Scheduler POSTs sessions with the service token  
-- Grade webhook  
+- Hermes (or any cron) POSTs sessions with `SESSION_CREATE_TOKEN`  
+- Hermes/AI polls `grade_requested` and POSTs `/api/sessions/:id/grade` as admin  
+- Optional grade webhook  
 
 ## Threat model (minimal)
 - Single trusted user  

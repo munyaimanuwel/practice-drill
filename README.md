@@ -108,38 +108,265 @@ Demo title after seed: **Code — String Calculator (C#)**.
 
 The app stores zips only. It does **not** run your code.
 
-### 5. After you request a grade
+### 5. Who grades, and how to set it up
 
-You wait. Grading is admin-only (`POST /api/sessions/:id/grade`). P0 has no in-app grader UI beyond that API.
+There is **no separate grader account** and **no grade form in the UI**. The seeded user is an **admin** (`isAdmin: true`). That same person can take the drills and later grade them by hand, or you can point **Hermes / an AI worker** at the HTTP API (see [Wire Hermes + AI](#7-wire-hermes--ai-scheduler-and-grader)).
 
-Until it is graded you can still change quiz answers or replace the code zip. Once **graded**, the session is closed for edits.
+P0 does not auto-grade and does not execute uploaded code. A human or an external agent reads the answers (or the zip under `storage/submissions/`) and posts a score.
 
-### 6. Create more sessions
+**Setup:** nothing extra. `npm run db:seed` creates the admin. Sign in with `SEED_USER_EMAIL` / `SEED_USER_PASSWORD`.
 
-The UI does not include a “new session” form. Add drills in one of these ways:
+**When you can grade:** the session must be **grade requested** (the learner clicked **Request grade** after submit).
 
-1. **Seed** — `npm run db:seed` upserts the two demo sessions (safe to re-run).
-2. **Admin API** (you are already signed in as the seeded admin):
-
-   ```bash
-   curl -X POST http://localhost:3000/api/sessions \
-     -H "Cookie: <session cookie>" -H "Content-Type: application/json" \
-     -d '{"type":"quiz","title":"My quiz","status":"ready","payload":{"questions":[]}}'
-   ```
-
-3. **Service token** — `Authorization: Bearer $SESSION_CREATE_TOKEN` with the same JSON body.
-
-For a code session, upload the starter zip after create:
+**How to grade** (admin session cookie from the browser, or log in with curl first):
 
 ```bash
-curl -X POST http://localhost:3000/api/sessions/<id>/starter \
+# 1. Sign in and save the cookie
+curl -c cookies.txt -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d "{\"email\":\"$SEED_USER_EMAIL\",\"password\":\"$SEED_USER_PASSWORD\"}"
+
+# 2. Grade (score 0–100, optional feedback markdown)
+curl -b cookies.txt -X POST http://localhost:3000/api/sessions/<id>/grade \
+  -H "Content-Type: application/json" \
+  -d '{"score":85,"feedback":"Clear explanation of scoped vs singleton. Mention captive dependencies next time."}'
+```
+
+That sets status to **graded**, stores `score` / `feedback` / `gradedAt`, and shows them on the session page. Non-admins get **403**. Once graded, the learner cannot edit answers or replace the zip.
+
+You can inspect sessions in Prisma Studio (`npm run db:studio`) if you want to look at stored answers or file paths before grading.
+
+### 6. How challenges are created
+
+The UI has **no “new session” screen**. Challenges (sessions) are created out of band, then they show up on **Sessions** for the seeded user.
+
+Use `status: "ready"` so they appear as startable. `draft` stays hidden from the usual “ready to work” flow.
+
+#### Option A — Seed (two demos)
+
+`npm run db:seed` upserts:
+
+| Title | Type | What it is |
+|-------|------|------------|
+| Quiz — C# & Docker | quiz | 5 original generic prompts in `prisma/seed.ts` |
+| Code — String Calculator (C#) | code | Public TDD kata; starter zip built from `fixtures/sample-starter/` |
+
+Safe to re-run. It will not overwrite an existing demo session’s payload after first create (`update: {}`).
+
+#### Option B — Admin API
+
+You are already the admin after seed. Create a **quiz**:
+
+```bash
+curl -b cookies.txt -X POST http://localhost:3000/api/sessions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "type": "quiz",
+    "title": "Quiz — HTTP caching",
+    "summary": "Cache-Control, ETag, and when to revalidate.",
+    "topicTags": ["http","web"],
+    "difficulty": 3,
+    "timeLimitMinutes": 30,
+    "status": "ready",
+    "payload": {
+      "questions": [
+        {"id":"q1","prompt":"When would you use ETag vs Cache-Control: no-store?","kind":"text","topic":"http","points":10}
+      ]
+    }
+  }'
+```
+
+Create a **code** challenge, then attach a starter zip:
+
+```bash
+curl -b cookies.txt -X POST http://localhost:3000/api/sessions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "type": "code",
+    "title": "Code — FizzBuzz",
+    "summary": "Console app with tests.",
+    "topicTags": ["csharp"],
+    "difficulty": 2,
+    "timeLimitMinutes": 45,
+    "status": "ready",
+    "payload": {
+      "brief_markdown": "## Task\nImplement FizzBuzz for 1..n.",
+      "rubric_markdown": "- Compiles\n- Tests pass\n- README",
+      "language": "csharp",
+      "hints": ["Start with the modulo cases."]
+    }
+  }'
+
+curl -b cookies.txt -X POST http://localhost:3000/api/sessions/<id>/starter \
+  -F "file=@starter.zip"
+```
+
+#### Option C — Service token (no browser)
+
+Set `SESSION_CREATE_TOKEN` in `.env` to a long random string (not the `change-me-*` default). Same JSON body as above:
+
+```bash
+curl -X POST http://localhost:3000/api/sessions \
+  -H "Authorization: Bearer $SESSION_CREATE_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"type":"quiz","title":"My quiz","status":"ready","payload":{"questions":[]}}'
+```
+
+The new session is assigned to the first user in the database (the seeded admin).
+
+#### Option D — CLI
+
+```bash
+# PowerShell example
+$env:CREATE_TYPE="quiz"
+$env:CREATE_TITLE="Quiz — Docker layers"
+$env:CREATE_STATUS="ready"
+$env:CREATE_PAYLOAD='{"questions":[{"id":"q1","prompt":"Why does instruction order matter in a Dockerfile?","kind":"text","points":10}]}'
+npm run session:create
+```
+
+Other `CREATE_*` vars are listed in `.env.example`.
+
+Payload shapes: [`docs/DATA_MODEL.md`](./docs/DATA_MODEL.md). Full HTTP spec: [`docs/API.md`](./docs/API.md).
+
+### 7. Wire Hermes + AI (scheduler and grader)
+
+This repo does **not** embed Hermes or an LLM. It exposes HTTP so an external runner (Hermes workflows, cron, GitHub Actions, a VPS script) can:
+
+1. **Schedule / generate challenges** — create `ready` sessions (and upload a starter zip for code).
+2. **Grade** — poll for `grade_requested`, send the payload to your model, post `score` + `feedback`.
+
+```
+Hermes (cron / workflow)
+        │
+        │  Bearer SESSION_CREATE_TOKEN
+        ▼
+POST /api/sessions  (+ POST /api/sessions/:id/starter for code)
+        │
+        ▼
+Learner in the browser → submit → Request grade
+        │
+        │  admin cookie (SEED_USER_EMAIL / PASSWORD)
+        ▼
+Hermes/AI: GET /api/sessions?status=grade_requested
+        → GET /api/sessions/:id
+        → model returns { score, feedback }
+        → POST /api/sessions/:id/grade
+```
+
+**Auth is split on purpose.** Middleware only lets the service token through on create + starter upload. Listing, reading answers, and grading need an **admin session cookie**.
+
+| Job | Route | Auth |
+|-----|--------|------|
+| Create session | `POST /api/sessions` | `Authorization: Bearer $SESSION_CREATE_TOKEN` |
+| Upload starter zip | `POST /api/sessions/:id/starter` | same bearer |
+| List waiting grades | `GET /api/sessions?status=grade_requested` | admin cookie |
+| Read questions + answers | `GET /api/sessions/:id` | admin cookie |
+| Submit grade | `POST /api/sessions/:id/grade` | admin cookie |
+
+There is **no webhook** when someone clicks **Request grade**. The grader must poll (Hermes every N minutes is enough). There is **no GET for the submission zip**; quiz grading is fully HTTP. For code, run the grader on the same machine as the app and read `session.submissionPath` under `STORAGE_ROOT` (default `./storage`).
+
+#### Env the worker needs
+
+Put these in Hermes / the VPS job env — not in git:
+
+```bash
+export APP_URL="https://drill.yourdomain.com"   # or http://localhost:3000
+export SESSION_CREATE_TOKEN="long-random"       # must match the app .env
+export SEED_USER_EMAIL="admin@localhost"
+export SEED_USER_PASSWORD="your-strong-password"
+# plus whatever your LLM gateway uses (Hermes already has this)
+```
+
+`SESSION_CREATE_TOKEN` must **not** be the placeholder `change-me-session-create-token` — the app ignores that value.
+
+#### Scheduler job (Hermes creates a quiz)
+
+Have an LLM emit JSON that matches `payload.questions`, then POST it. Example Hermes step / shell:
+
+```bash
+# 1. Generate questions (swap for your Hermes LLM node)
+QUESTIONS='{
+  "questions": [
+    {"id":"q1","prompt":"What does docker-compose healthcheck actually wait for?","kind":"text","topic":"docker","points":10},
+    {"id":"q2","prompt":"Scoped vs singleton in ASP.NET Core — give one valid use of each.","kind":"text","topic":"csharp","points":10}
+  ]
+}'
+
+# 2. Create a ready session (assigned to the seeded user)
+curl -sS -X POST "$APP_URL/api/sessions" \
+  -H "Authorization: Bearer $SESSION_CREATE_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"type\": \"quiz\",
+    \"title\": \"Quiz — $(date +%Y-%m-%d)\",
+    \"summary\": \"Generated by Hermes\",
+    \"topicTags\": [\"csharp\",\"docker\"],
+    \"difficulty\": 3,
+    \"timeLimitMinutes\": 40,
+    \"status\": \"ready\",
+    \"scheduledFor\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
+    \"payload\": $QUESTIONS
+  }"
+```
+
+Code session: same `POST /api/sessions` with `type: "code"` and `brief_markdown` / `rubric_markdown` in `payload`, then:
+
+```bash
+curl -sS -X POST "$APP_URL/api/sessions/$SESSION_ID/starter" \
   -H "Authorization: Bearer $SESSION_CREATE_TOKEN" \
   -F "file=@starter.zip"
 ```
 
-CLI alternative: `npm run session:create` (see env comments in `.env.example`).
+Schedule that workflow daily (or whenever you want a new drill). The learner just opens **Sessions**.
 
-Full HTTP spec: [`docs/API.md`](./docs/API.md).
+#### Grader job (Hermes + AI)
+
+```bash
+# 1. Admin login → cookie jar (grade routes reject the bearer token)
+curl -sS -c /tmp/drill-cookies -X POST "$APP_URL/api/auth/login" \
+  -H "Content-Type: application/json" \
+  -d "{\"email\":\"$SEED_USER_EMAIL\",\"password\":\"$SEED_USER_PASSWORD\"}"
+
+# 2. Poll sessions waiting for review
+curl -sS -b /tmp/drill-cookies \
+  "$APP_URL/api/sessions?status=grade_requested"
+# → { "sessions": [ { "id", "type", "title", ... } ] }
+
+# 3. Load one session (quiz: payload.questions + answerPayload)
+SESSION_ID="<id from step 2>"
+curl -sS -b /tmp/drill-cookies "$APP_URL/api/sessions/$SESSION_ID"
+# → { "session": { "payload": { "questions": [...] }, "answerPayload": { "q1": "..." }, ... } }
+
+# 4. Ask your model for JSON { "score": 0-100, "feedback": "markdown" }
+#    Feed it: title, payload (questions or brief/rubric), answerPayload, and any local zip.
+#    Example shape of the model output:
+#    {"score":82,"feedback":"q1 solid on healthchecks. q2 mixed up scoped vs transient."}
+
+# 5. Write the grade (admin only)
+curl -sS -b /tmp/drill-cookies -X POST "$APP_URL/api/sessions/$SESSION_ID/grade" \
+  -H "Content-Type: application/json" \
+  -d '{"score":82,"feedback":"q1 solid on healthchecks. q2 mixed up scoped vs transient."}'
+```
+
+Suggested model instructions (drop into the Hermes LLM node):
+
+- You are grading a practice drill, not writing a new one.
+- Use the session `payload` as the rubric (quiz points, or `rubric_markdown` for code).
+- Return **only** JSON: `{"score": <0-100 integer>, "feedback": "<markdown>"}`.
+- Score is overall 0–100 (this app does not store per-question scores).
+- Do not execute untrusted code. For code sessions, review the zip; do not run it unless you sandbox it yourself.
+
+#### Two Hermes workflows (typical)
+
+| Workflow | Trigger | What it does |
+|----------|---------|----------------|
+| **Create** | Cron (e.g. daily) | LLM writes a quiz or code brief → `POST /api/sessions` (+ starter zip) |
+| **Grade** | Cron every 5–15 min | Login → list `grade_requested` → LLM grades → `POST .../grade` |
+
+Keep the learner loop in the browser. Hermes never needs to click **Start** / **Submit**; it only creates work and writes grades.
+
+If create returns **401**, the bearer token does not match the app or is still the `change-me-*` placeholder. If grade returns **401**, you forgot the admin cookie. If grade returns **403**, the seeded user is not `isAdmin`.
 
 ---
 
