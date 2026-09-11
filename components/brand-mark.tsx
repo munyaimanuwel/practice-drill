@@ -7,8 +7,8 @@ export function BrandMark({ className }: { className?: string }) {
     <svg className={className} viewBox="0 0 64 64" aria-hidden>
       <defs>
         <linearGradient id={gid} x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#2563EB" />
-          <stop offset="1" stopColor="#7C3AED" />
+          <stop offset="0" stopColor="hsl(var(--primary))" />
+          <stop offset="1" stopColor="hsl(var(--secondary))" />
         </linearGradient>
       </defs>
       <rect width="64" height="64" rx="12" fill={`url(#${gid})`} />

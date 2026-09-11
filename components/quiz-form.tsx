@@ -195,7 +195,7 @@ export default function QuizForm({ session, questions, initialAnswers }: Props) 
       {showGrade && (
         <div className="mt-6 border border-border bg-card p-5">
           <div className="flex items-baseline gap-3">
-            <span className="font-display text-3xl font-semibold text-foreground">{session.score ?? "—"}</span>
+            <span className="font-mono text-3xl font-semibold text-foreground">{session.score ?? "—"}</span>
             <span className="font-mono text-sm text-muted-foreground">/100 graded</span>
           </div>
           {session.feedback && (

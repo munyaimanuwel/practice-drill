@@ -124,7 +124,7 @@ export default function CodeForm({ session }: Props) {
 
       <div className="mb-6 grid gap-px overflow-hidden border border-border bg-border lg:grid-cols-2">
         <section className="bg-card p-5">
-          <h2 className="mb-3 font-display text-base font-semibold text-foreground">Brief</h2>
+          <h2 className="mb-3 text-base font-semibold text-foreground">Brief</h2>
           {session.payload.brief_markdown ? (
             <Markdown source={session.payload.brief_markdown} />
           ) : (
@@ -133,7 +133,7 @@ export default function CodeForm({ session }: Props) {
         </section>
 
         <section className="bg-card p-5">
-          <h2 className="mb-3 font-display text-base font-semibold text-foreground">Rubric</h2>
+          <h2 className="mb-3 text-base font-semibold text-foreground">Rubric</h2>
           {session.payload.rubric_markdown ? (
             <Markdown source={session.payload.rubric_markdown} />
           ) : (
@@ -154,7 +154,7 @@ export default function CodeForm({ session }: Props) {
       )}
 
       <div className="border border-border bg-card p-5">
-        <h2 className="mb-3 font-display text-base font-semibold text-foreground">Work in your IDE</h2>
+        <h2 className="mb-3 text-base font-semibold text-foreground">Work in your IDE</h2>
         <ol className="list-decimal space-y-1 pl-5 text-sm text-foreground">
           <li>Download the starter pack below.</li>
           <li>Unzip it and open the folder in Cursor or VS Code (or the .sln in Visual Studio).</li>
@@ -216,7 +216,7 @@ export default function CodeForm({ session }: Props) {
       {status === "graded" && (
         <div className="mt-6 border border-border bg-card p-5">
           <div className="flex items-baseline gap-3">
-            <span className="font-display text-3xl font-semibold text-foreground">{session.score ?? "—"}</span>
+            <span className="font-mono text-3xl font-semibold text-foreground">{session.score ?? "—"}</span>
             <span className="font-mono text-sm text-muted-foreground">/100 graded</span>
           </div>
           {session.feedback && (
